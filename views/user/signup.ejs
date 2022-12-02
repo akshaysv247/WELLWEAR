@@ -1,0 +1,546 @@
+<% let message = locals.message || null %> 
+<% let regMessage=locals.regMessage || null %>
+
+
+<!DOCTYPE html>
+<html lang="en" class="darkmode" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEAR WELL FASHION STORE</title>
+    <!--================= Favicon =================-->
+    <link rel="apple-touch-icon" href="/images/fav.png">
+    <link rel="shortcut icon" type="/images/x-icon" href="/images/fav.png">
+    <!--================= Bootstrap V5 CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/bootstrap.min.css">
+    <!--================= Font Awesome 5 CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/all.min.css">
+    <!--================= RT Icons CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/rt-icons.css">
+    <!--================= Animate css =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/animate.min.css">
+    <!--================= Magnific popup Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/magnific-popup.css">
+    <!--================= Swiper Slider Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/swiper-bundle.min.css">
+    <!--================= Mobile Menu CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/metisMenu.css">
+    <!--================= Main Menu CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/rtsmenu.css">
+    <!--================= Preloader CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/preloader.css">
+    <!--================= Main Stylesheet =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/variables/variable1.css">
+    <!--================= Main Stylesheet =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <div id="weiboo-load">
+    <div class="preloader-new">
+        <svg class="cart_preloader" role="img" aria-label="Shopping cart_preloader line animation" viewBox="0 0 128 128"
+            width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="8">
+                <g class="cart__track" stroke="hsla(0,10%,10%,0.1)">
+                    <polyline points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" />
+                    <circle cx="43" cy="111" r="13" />
+                    <circle cx="102" cy="111" r="13" />
+                </g>
+                <g class="cart__lines" stroke="currentColor">
+                    <polyline class="cart__top" points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80"
+                        stroke-dasharray="338 338" stroke-dashoffset="-338" />
+                    <g class="cart__wheel1" transform="rotate(-90,43,111)">
+                        <circle class="cart__wheel-stroke" cx="43" cy="111" r="13" stroke-dasharray="81.68 81.68"
+                            stroke-dashoffset="81.68" />
+                    </g>
+                    <g class="cart__wheel2" transform="rotate(90,102,111)">
+                        <circle class="cart__wheel-stroke" cx="102" cy="111" r="13" stroke-dasharray="81.68 81.68"
+                            stroke-dashoffset="81.68" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+</div>
+<!--================= Preloader End Here =================-->
+
+<!-- <div class="anywere anywere-home"></div> -->
+
+<!--================= Header Section Start Here =================-->
+<header id="rtsHeader">
+    <div class="header-topbar header-topbar1">
+        <div class="container">
+            <div class="header-top-area">
+                <div class="slider-div">
+                    <div class="swiper rts-topSlide1">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
+                                        Now</a></h3>
+                            </div>
+                            <div class="swiper-slide">
+                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
+                                        Now</a></h3>
+                            </div>
+                            <div class="swiper-slide">
+                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
+                                        Now</a></h3>
+                            </div>
+                            <div class="swiper-slide">
+                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
+                                        Now</a></h3>
+                            </div>
+                        </div>
+                        <div class="slider-navigation2">
+                            <div class="swiper-button-prev slider-btn prev"><i class="rt rt-arrow-left-long"></i>
+                            </div>
+                            <div class="swiper-button-next slider-btn next"><i class="rt rt-arrow-right-long"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-sticky">
+        <div class="container">
+            <div class="navbar-part navbar-part1">
+                <div class="navbar-inner">
+                    <div class="left-side">
+                        <div class="hamburger-1">
+                            <a href="#" class="nav-menu-link">
+                                <span class="dot1"></span>
+                                <span class="dot2"></span>
+                                <span class="dot3"></span>
+                                <span class="dot4"></span>
+                                <span class="dot5"></span>
+                                <span class="dot6"></span>
+                                <span class="dot7"></span>
+                                <span class="dot8"></span>
+                                <span class="dot9"></span>
+                            </a>
+                        </div>
+                        <a href="/home" class="logo"><img src="/images/WEARWELL2.svg" alt="weiboo-logo"></a>
+                    </div>
+                    <div class="rts-menu">
+                        <nav class="menus menu-toggle">
+                            <ul class="nav__menu">
+                                <li class="has-dropdown"><a class="menu-item active1" href="/home">Home </a>
+                                    <!-- <ul class="dropdown-ul">
+                                        <li class="dropdown-li"><a class="dropdown-link active" href="/home">Main
+                                                Home</a>
+                                        </li>
+                                        <li class="dropdown-li"><a class="dropdown-link" href="index-two.html">Fashion
+                                                </a>
+                                        </li>
+                                        
+                                        <li class="dropdown-li"><a class="dropdown-link" href="index-four.html">Decor
+                                                Home</a>
+                                        </li>
+                
+                                        <li class="dropdown-li"><a class="dropdown-link" href="index-six.html">Grocery
+                                                Home</a>
+                                        </li>
+                                        <li class="dropdown-li"><a class="dropdown-link"
+                                                href="index-seven.html">Footwear
+                                                Home</a>
+                                        </li>
+                                    </ul>
+                                </li> -->
+
+                                <li class="has-dropdown"><a class="menu-item" href="/shop">Shop </a>
+
+                                <li><a class="menu-item" href="/contact">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="responsive-hamburger">
+                        <div class="hamburger-1">
+                            <a href="#" class="nav-menu-link">
+                                <span class="dot1"></span>
+                                <span class="dot2"></span>
+                                <span class="dot3"></span>
+                                <span class="dot4"></span>
+                                <span class="dot5"></span>
+                                <span class="dot6"></span>
+                                <span class="dot7"></span>
+                                <span class="dot8"></span>
+                                <span class="dot9"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-action-items header-action-items1">
+                        <div class="search-part">
+                            <div class="search-icon action-item icon"><i class="fa-brands fa-searchengin"></i></div>
+                            <div class="search-input-area">
+                                <div class="container">
+                                    <div class="search-input-inner">
+                                        <div class="input-div">
+                                            <input id="searchInput1" class="search-input" type="text"
+                                                placeholder="Search by keyword or #">
+                                        </div>
+                                        <div class="search-close-icon"><i class="fa-brands fa-searchengin"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cart-bar">
+        <div class="cart-header">
+            <h3 class="cart-heading">MY CART (3 ITEMS)</h3>
+            <div class="close-cart"><i class="fal fa-times"></i></div>
+        </div>
+            
+        <!-- side-mobile-menu start -->
+        <nav class="side-mobile-menu side-mobile-menu1">
+            <ul id="mobile-menu-active">
+                <li class="has-dropdown firstlvl">
+                    <a class="mm-link" href="index.html">Home <i class="rt-angle-down"></i></a>
+                    <ul class="sub-menu">
+                        <li><a href="index.html">Main Home</a></li>
+                        <li><a href="index-two.html">Fashion Home</a></li>
+                        <li><a href="index-three.html">Furniture Home</a></li>
+                        <li><a href="index-four.html">Decor Home</a></li>
+                        <li><a href="index-five.html">Electronics Home</a></li>
+                        <li><a href="index-six.html">Grocery Home</a></li>
+                        <li><a href="index-seven.html">Footwear Home</a></li>
+                        <li><a href="index-seven.html">Gaming Home</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown firstlvl">
+                    <a class="mm-link" href="shop.html">Shop <i class="rt-angle-down"></i></a>
+                    <ul class="sub-menu mega-dropdown-mobile">
+                        <li class="mega-dropdown-li">
+                            <ul class="mega-dropdown-ul mm-show">
+                                <li class="dropdown-li"><a class="dropdown-link" href="shop.html">Shop</a>
+                                </li>
+                                <li class="dropdown-li"><a class="dropdown-link" href="slidebar-left.html">Left
+                                        Sidebar
+                                        Shop</a>
+                                </li>
+                                <li class="dropdown-li"><a class="dropdown-link" href="slidebar-right.html">Right
+                                        Sidebar
+                                        Shop</a>
+                                </li>
+                                <li class="dropdown-li"><a class="dropdown-link" href="full-width-shop.html">Full
+                                        Width Shop</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mega-dropdown-li">
+                            <ul class="mega-dropdown-ul mm-show">
+                                <li class="dropdown-li"><a class="dropdown-link" href="product-details.html">Single
+                                        Product
+                                        Layout
+                                        One</a>
+                                </li>
+                                <li class="dropdown-li"><a class="dropdown-link" href="product-details2.html">Single
+                                        Product Layout
+                                        Two</a>
+                                </li>
+                                <li class="dropdown-li"><a class="dropdown-link" href="variable-products.html">Variable
+                                        Product</a>
+                                </li>
+                                <li class="dropdown-li"><a class="dropdown-link" href="grouped-products.html">Grouped
+                                        Product</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="mega-dropdown-li">
+                            <ul class="mega-dropdown-ul mm-show">
+                                <li class="dropdown-li"><a class="dropdown-link" href="cart.html">Cart
+                                    </a>
+                                </li>
+                                <li class="dropdown-li"><a class="dropdown-link" href="checkout.html">Checkout</a>
+                                </li>
+                                <li class="dropdown-li"><a class="dropdown-link" href="account.html">My
+                                        Account</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-dropdown firstlvl">
+                    <a class="mm-link" href="index.html">Pages <i class="rt-angle-down"></i></a>
+                    <ul class="sub-menu">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="faq.html">FAQ's</a></li>
+                        <li><a href="error.html">Error 404</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown firstlvl">
+                    <a class="mm-link" href="news.html">Blog <i class="rt-angle-down"></i></a>
+                    <ul class="sub-menu">
+                        <li><a href="news.html">Blog</a></li>
+                        <li><a href="news-grid.html">Blog Grid</a></li>
+                        <li><a href="news-details.html">Blog Details</a></li>
+                    </ul>
+                </li>
+                <li><a class="mm-link" href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-action-items header-action-items1 header-action-items-side">
+            <div class="search-part">
+                <div class="search-icon action-item icon"><i class="rt-search"></i></div>
+                <div class="search-input-area">
+                    <div class="container">
+                        <div class="search-input-inner">
+                            <select id="custom-select">
+                                <option value="hide">All Catagory</option>
+                                <option value="all">All</option>
+                                <option value="men">Men</option>
+                                <option value="women">Women</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="shoes">Glasses</option>
+                                <option value="shoes">Bags</option>
+                                <option value="shoes">Assesories</option>
+                            </select>
+                            <div class="input-div">
+                                <div class="search-input-icon"><i class="rt-search mr--10"></i></div>
+                                <input class="search-input" type="text" placeholder="Search by keyword or #">
+                            </div>
+                            <div class="search-close-icon"><i class="rt-xmark"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart action-item">
+                <div class="cart-nav">
+                    <div class="cart-icon icon"><i class="rt-cart"></i><span class="wishlist-dot icon-dot">3</span>
+                    </div>
+                </div>
+            </div>
+            <div class="wishlist action-item">
+                <div class="favourite-icon icon"><i class="rt-heart"></i><span class="cart-dot icon-dot">0</span>
+                </div>
+            </div>
+            <a href="/signup" class="account"><i class="rt-user-2"></i></a>
+        </div>
+        <!-- side-mobile-menu end -->
+    </aside>
+    <!--================= Banner Section Start Here =================-->
+    <div class="banner banner-1 bg-image">
+        <div class="container">
+            <div class="banner-inner">
+                <div class="row">
+                    <div class="col-xl-2 col-md-4 col-sm-12 gutter-1">
+                        <div class="catagory-sidebar">
+                            <div class="widget-bg">
+                                <h2 class="widget-title">All Categories <i class="rt-angle-down"></i></h2>
+                                <nav>
+                                    <ul>
+                                        <li><a href="/shop">Activewear <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                        <li><a href="/shop">Bikinis <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                        <li><a href="/shop">Dresses <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                        <li><a href="/shop">Jumpsuits <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                        <li><a href="/shop">Smart Dress <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                        <li><a href="/shop">Sneakers <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                        <li><a href="/shop">Sweetshirts <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                        <li><a href="/shop">Trousers <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                        <li><a href="/shop">Furniture <i class="rt rt-arrow-right-long"></i></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-md-8 col-sm-12 gutter-2">
+                        <div class="swiper bannerSlide2">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="banner-single bg-image bg-image-3-1">
+                                        <div class="container">
+                                            <div class="single-inner">
+                                                <div class="content-box">
+                                                    <p class="slider-subtitle"><img src="/images/banner/wvbo-icon.png"
+                                                            alt=""> Spring
+                                                        summer 22 women’s collection </p>
+                                                    <h2 class="slider-title"> HOT COLLECTION <br> FOR WOMEN</h2>
+                                                    <div class="slider-description">
+                                                        <p>Easy & safe payment with PayPal. sequines & embroidered
+                                                            for all</p>
+                                                    </div>
+                                                    <a href="/shop" class="slider-btn2">View Collections</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="banner-single bg-image bg-image-3-3">
+                                        <div class="container">
+                                            <div class="single-inner">
+                                                <div class="content-box">
+                                                    <p class="slider-subtitle"><img src="/images/banner/wvbo-icon.png"
+                                                            alt=""> Spring
+                                                        summer 22 women’s collection </p>
+                                                    <h2 class="slider-title"> NEW COLLECTION <br> FOR WOMEN</h2>
+                                                    <div class="slider-description">
+                                                        <p>Easy & safe payment with PayPal. sequines & embroidered
+                                                            for all</p>
+                                                    </div>
+                                                    <a href="/shop" class="slider-btn2">View Collections</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="banner-single bg-image bg-image-3-4">
+                                        <div class="container">
+                                            <div class="single-inner">
+                                                <div class="content-box">
+                                                    <p class="slider-subtitle"><img src="/images/banner/wvbo-icon.png"
+                                                            alt=""> Spring
+                                                        summer 22 women’s collection </p>
+                                                    <h2 class="slider-title"> WINTER DRESS <br> FOR WOMEN</h2>
+                                                    <div class="slider-description">
+                                                        <p>Easy & safe payment with PayPal. sequines & embroidered
+                                                            for all</p>
+                                                    </div>
+                                                    <a href="/shop" class="slider-btn2">View Collections</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slider-navigation">
+                                <div class="swiper-button-prev slider-btn prev"><i class="rt rt-arrow-left-long"></i>
+                                </div>
+                                <div class="swiper-button-next slider-btn next"><i class="rt rt-arrow-right-long"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================= Banner Section End Here =================-->
+</header>
+        <!--================= Header Section End Here =================-->
+
+        <!--login-area start-->
+        <div class="login-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 mr-10">
+                        <div class="login-form">
+                            <div class="section-title">
+                                <h2>Login</h2>
+                            </div>
+                                                        
+                                <div class="card">
+                                <div class="card-body">
+                                <img src="/images/featured/blog-5.jpg">
+                                <a href="/user-log" ><div class="form">
+                                    <button type="submit" class="btn">Login Here</button>
+                                </div></a>
+                                </div>
+                            </div>
+                            <p>If you are new here , then let's create a new account by registering on the right side register part</p>
+                            <p>Or if your are already a member then just click on the login .</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 ml-10">
+                        <div class="register-form">
+                            <div class="section-title">
+                                <h2>Registration</h2>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <form action="/register" method="post">
+                                        <div class="form">
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                placeholder="Username*" required />
+                                        </div>
+                                        <div class="form">
+
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                placeholder="Email address*" required />
+                                        </div>
+                                        <div class="form">
+
+                                            <input type="phone" class="form-control" id="phone" name="phone"
+                                                placeholder="Phone Number" required />
+                                        </div>
+                                        <div class="form">
+                                            <div class="password-input">
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password" placeholder="Password*" required />
+                                                <span class="show-password-input"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form">
+                                            <div class="password-input">
+                                                <input type="password" class="form-control" id="conform-password"
+                                                    name="conformPassword" placeholder="Conform Password*" required />
+                                                <span class="show-password-input"></span>
+                                            </div>
+                                        </div>
+                                        <% if(regMessage){ %>
+                                            <p style="color:red">
+                                                <%= regMessage %> !
+                                            </p>
+                                            <% } %>
+                                        <div class="form">
+                                            <button type="submit" class="btn">Register</button></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--login-area end-->
+        
+
+        <!--================= Footer Start Here =================-->
+        <%- include('partials/user-footer.ejs') %>
+            <!--================= Jquery latest version =================-->
+            <script src="/js/vendors/jquery-3.6.0.min.js"></script>
+            <!--================= Bootstrap latest version =================-->
+            <script src="/js/vendors/bootstrap.min.js"></script>
+            <!--================= Wow.js =================-->
+            <script src="/js/vendors/wow.min.js"></script>
+            <!--================= Swiper Slider =================-->
+            <script src="/js/vendors/swiper-bundle.min.js"></script>
+            <!--================= Nice Select =================-->
+            <script src="/js/vendors/jquery.nice-select.js"></script>
+            <!--================= Zoom Plugin =================-->
+            <script src="/js/vendors/zoom.js"></script>
+            <!--================= metisMenu Plugin =================-->
+            <script src="/js/vendors/metisMenu.min.js"></script>
+            <!--================= Main Menu Plugin =================-->
+            <script src="/js/vendors/rtsmenu.js"></script>
+            <!--================= Magnefic Popup Plugin =================-->
+            <script src="/js/vendors/isotope.pkgd.min.js"></script>
+            <!--================= Magnefic Popup Plugin =================-->
+            <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
+            <!--================= Main Script =================-->
+            <script src="/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" class="darkmode" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEAR WELL FASHION STORE</title>
+    <!--================= Favicon =================-->
+    <link rel="apple-touch-icon" href="/images/fav.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/fav.png">
+    <!--================= Bootstrap V5 CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/bootstrap.min.css">
+    <!--================= Font Awesome 5 CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/all.min.css">
+    <!--================= RT Icons CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/rt-icons.css">
+    <!--================= Animate css =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/animate.min.css">
+    <!--================= Magnific popup Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/magnific-popup.css">
+    <!--================= Swiper Slider Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/swiper-bundle.min.css">
+    <!--================= Mobile Menu CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/metisMenu.css">
+    <!--================= Main Menu CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/rtsmenu.css">
+    <!--================= Preloader CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/preloader.css">
+    <!--================= Main Stylesheet =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/variables/variable1.css">
+    <!--================= Main Stylesheet =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+   
+
+    
+    <%- include('partials/user-navbar2') %> 
+    <!--================= Header Section End Here =================-->
+
+    <!--================= Shop Section Start Here =================-->
+    <div class="rts-shop-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9">
+                    <div class="shop-product-topbar">
+                        <span class="items-onlist">Showing 1-12 of 70 results</span>
+                        <div class="filter-area">
+                            <p class="select-area">
+                                <select class="select">
+                                    <option value="*">Sort by average rating</option>
+                                    <option value=".popular">Sort by popularity</option>
+                                    <option value=".best-rate">Sort by latest</option>
+                                    <option value=".on-sale">Sort by price: low to high</option>
+                                    <option value=".featured">Sort by price: high to low</option>
+                                </select>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="products-area products-area3">
+                        <div class="row justify-content-center">
+                            <% Products.forEach(element =>{ %> 
+                            <div class="col-xl-4 col-md-4 col-sm-6">
+                                <div class="product-item product-item2 element-item3">
+                                    <a href="/product-details/<%= element._id %> " class="product-image">
+                                        <img src="/productImages/<%= element.image[1]  %> " alt="product-image">
+                                    </a>
+                                    <div class="bottom-content">
+                                        <a href="/product-details/<%= element._id %>" class="product-name"><%= element.title %> </a>
+                                        <div class="action-wrap">
+                                            <span class="product-price"><%= element.price %> </span>
+                                            <a href="/add-cart?id=<%= element._id %>" class="addto-cart"><i class="fal fa-shopping-cart"></i>
+                                                Add To
+                                                Cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="product-actions">
+                                        <a href="/add-wishlist?id=<%= element._id %>" class="product-action"><i class="fal fa-heart"></i></a>
+                                        <button class="product-action product-details-popup-btn"><i
+                                                class="fal fa-eye"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                    <div class="product-pagination-area mt--20">
+                        <button class="prev"><i class="far fa-long-arrow-left"></i></button>
+                        <button class="number active">01</button>
+                        <button class="number">02</button>
+                        <button class="skip-number">---</button>
+                        <button class="number">07</button>
+                        <button class="number">08</button>
+                        <button class="next"><i class="far fa-long-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="side-sticky">
+                        <div class="shop-side-action">
+                            <div class="action-item">
+                                <div class="action-top">
+                                    <span class="action-title">PRODUCT CATEGORY</span>
+                                </div>
+                                <% Categories.forEach(item=>{ %> 
+                                <div class="category-item">
+                                    <div class="category-item-inner">
+                                        <div class="category-title-area">
+                                            <span class="point"></span>
+                                            <span class="category-title"><%= item.catName %> </span>
+                                        </div>
+                                        
+                                        <div class="down-icon"><i class="far fa-angle-down"></i></div>
+                                    </div>
+                                    <!-- <div class="sub-categorys">
+                                        <ul class="sub-categorys-inner">
+                                            <li><span class="point"></span><a href="/shop">Clothes</a></li>
+                                            <li><span class="point"></span><a href="/shop">Shoes</a></li>
+                                            <li><span class="point"></span><a href="/shop">Toys</a></li>
+                                        </ul>
+                                    </div> -->
+                                </div>
+                                <% }) %> 
+                            <!-- <div class="action-item">
+                                <div class="action-top">
+                                    <span class="action-title">FILTER BY PRICE</span>
+                                </div>
+                                <div class="nstSlider" data-range_min="50" data-range_max="20000" data-cur_min="20"
+                                    data-cur_max="10000">
+
+                                    <div class="bar"></div>
+                                    <div class="leftGrip price-range-grip"></div>
+                                    <div class="rightGrip price-range-grip"></div>
+                                </div>
+                                <div class="range-label-area">
+                                    <div class="min-price d-flex">
+                                        <span class="range-lbl">Min:</span>
+                                        <span class="currency-symbol">$</span>
+                                        <div class="leftLabel price-range-label"></div>
+                                    </div>
+                                    <div class="min-price d-flex">
+                                        <span class="range-lbl">Max:</span>
+                                        <span class="currency-symbol">$</span>
+                                        <div class="rightLabel price-range-label"></div>
+                                    </div>
+                                </div>
+                            </div> -->
+    
+                            <div>
+                                <a href="/shop" class="banner-item">
+                                    <div class="banner-inner">
+                                        <span class="pretitle">Winter Fashion</span>
+                                        <h1 class="title">Behind the
+                                            deseart</h1>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================= Shop Section Section End Here =================-->
+
+
+    <!--================= Product-details Section Start Here =================-->
+    <div class="product-details-popup-wrapper">
+        <div class="rts-product-details-section rts-product-details-section2 product-details-popup-section">
+            <div class="product-details-popup">
+                <button class="product-details-close-btn"><i class="fal fa-times"></i></button>
+                <% Products.forEach(element=>{  %> 
+                <div class="details-product-area">
+                    <div class="product-thumb-area">
+                        <div class="cursor"></div>
+                        <div class="thumb-wrapper one filterd-items figure">
+                            <div class="product-thumb zoom" onmousemove="zoom(event)"
+                                style="background-image: url(assets/images/products/product-details.jpg)"><img
+                                    src="/productImages/<%= element.image[0] %> " alt="product-thumb">
+                            </div>
+                        </div>
+                        <div class="thumb-wrapper two filterd-items hide">
+                            <div class="product-thumb zoom" onmousemove="zoom(event)"
+                                style="background-image: url(assets/images/products/product-filt2.jpg)"><img
+                                    src="/productImages/<%= element.image[1] %>" alt="product-thumb">
+                            </div>
+                        </div>
+                        <div class="thumb-wrapper three filterd-items hide">
+                            <div class="product-thumb zoom" onmousemove="zoom(event)"
+                                style="background-image: url(assets/images/products/product-filt3.jpg)"><img
+                                    src="/productImages/<%= element.image[2] %>" alt="product-thumb">
+                            </div>
+                        </div>
+                        <div class="product-thumb-filter-group">
+                            <div class="thumb-filter filter-btn active" data-show=".one"><img
+                                    src="/productImages/<%= element.image[3] %>" alt="product-thumb-filter"></div>
+                            <div class="thumb-filter filter-btn" data-show=".two"><img
+                                    src="/productImages/<%= element.image[4] %>" alt="product-thumb-filter"></div>
+                            <div class="thumb-filter filter-btn" data-show=".three"><img
+                                    src="/productImages/<%= element.image[5] %>" alt="product-thumb-filter"></div>
+                        </div>
+                    </div>
+                    <div class="contents">
+                        <div class="product-status">
+                            <span class="product-catagory"><%= element.category.catName %> </span>
+                            <div class="rating-stars-group">
+                                <div class="rating-star"><i class="fas fa-star"></i></div>
+                                <div class="rating-star"><i class="fas fa-star"></i></div>
+                                <div class="rating-star"><i class="fas fa-star-half-alt"></i></div>
+                                <span>10 Reviews</span>
+                            </div>
+                        </div>
+                        <h2 class="product-title"><%= element.title %> <span class="stock">In Stock</span></h2>
+                        <span class="product-price"><span class="old-price">$19.35</span><%= element.price %> </span>
+                        <p>
+                            WEARWELL has brought to you the <%= element.title %> . It is a
+                            completely modern design and you feel comfortable to put on this <%= element.title %> .
+                            Buy it at the best price.
+                        </p>
+                        <div class="product-bottom-action">
+                            <div class="cart-edit">
+                                <div class="quantity-edit action-item">
+                                    <button class="button minus"><i class="fal fa-minus minus"></i></button>
+                                    <input type="text" class="input" value="01" />
+                                    <button class="button plus">+<i class="fal fa-plus plus"></i></button>
+                                </div>
+                            </div>
+                            <a href="/add-cart?id=<%= element._id %>" class="addto-cart-btn action-item"><i class="rt-basket-shopping"></i>
+                                Add To
+                                Cart</a>
+                                <a href="/wishlist?id=<%= element._id %>" class="wishlist-btn action-item"><i class="rt-heart"></i></a>
+                            </div>
+                            <div class="product-uniques">
+                                <!-- <span class="sku product-unipue"><span>SKU: </span> BO1D0MX8SJ</span> -->
+                                <!-- <span class="catagorys product-unipue"><span>Categories: </span> T-Shirts, Tops, Mens</span> -->
+                                <span class="tags product-unipue"><span>Tags: </span> <%= element.group_tag  %> </span>
+                            </div>
+                            <div class="share-social">
+                                <span>Share:</span>
+                                <a class="platform" href="http://facebook.com" target="_blank"><i
+                                    class="fab fa-facebook-f"></i></a>
+                                    <a class="platform" href="http://twitter.com" target="_blank"><i
+                                        class="fab fa-twitter"></i></a>
+                            <a class="platform" href="http://behance.com" target="_blank"><i
+                                    class="fab fa-behance"></i></a>
+                            <a class="platform" href="http://youtube.com" target="_blank"><i
+                                    class="fab fa-youtube"></i></a>
+                            <a class="platform" href="http://linkedin.com" target="_blank"><i
+                                    class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <% }) %> 
+            </div>
+        </div>
+    </div>
+    <!--================= Product-details Section End Here =================-->
+
+
+    <!--================= Footer Start Here =================-->
+<%- include('partials/user-footer.ejs') %> 
+    
+    <!--================= Jquery latest version =================-->
+    <script src="/js/vendors/jquery-3.6.0.min.js"></script>
+    <!--================= Bootstrap latest version =================-->
+    <script src="/js/vendors/bootstrap.min.js"></script>
+    <!--================= Wow.js =================-->
+    <script src="/js/vendors/wow.min.js"></script>
+    <!--================= Swiper Slider =================-->
+    <script src="/js/vendors/swiper-bundle.min.js"></script>
+    <!--================= Nice Select =================-->
+    <script src="/js/vendors/jquery.nice-select.js"></script>
+    <!--================= Zoom Plugin =================-->
+    <script src="/js/vendors/zoom.js"></script>
+    <!--================= metisMenu Plugin =================-->
+    <script src="/js/vendors/metisMenu.min.js"></script>
+    <!--================= Main Menu Plugin =================-->
+    <script src="/js/vendors/rtsmenu.js"></script>
+    <!--================= Magnefic Popup Plugin =================-->
+    <script src="/js/vendors/isotope.pkgd.min.js"></script>
+    <!--================= Magnefic Popup Plugin =================-->
+    <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
+    <!--================= Main Script =================-->
+    <script src="/js/main.js"></script>
+    </body>
+    
+    </html>

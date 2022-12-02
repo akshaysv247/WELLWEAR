@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="WEARWELL - ADMIN PANEL.">
+
+    <title>WEARWELL - ADMIN PANEL.</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+
+    <!-- PLUGINS CSS STYLE -->
+    <link href="/assets/plugins/simplebar/simplebar.css" rel="stylesheet" />
+
+    <!-- ekka CSS -->
+    <link id="ekka-css" rel="stylesheet" href="/Stylesheets/ekka.css" />
+
+    <!-- FAVICON -->
+    <link href="/assets/img/favicon.svg" rel="shortcut icon" />
+
+</head>
+
+<body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-dark ec-header-light" id="body">
+
+    <!-- WRAPPER -->
+    <div class="wrapper">
+
+        <!-- LEFT MAIN SIDEBAR -->
+        <%- include('partials/admin-sidebar.ejs') %>
+            <!-- PAGE WRAPPER -->
+            <div class="ec-page-wrapper">
+
+                <!-- Header -->
+                <%- include('partials/admin-header.ejs') %>
+                    < <!-- CONTENT WRAPPER -->
+                        <div class="ec-content-wrapper">
+                            <div class="content">
+                                <div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h1>Edit Product</h1>
+                                        <p class="breadcrumbs"><span><a href="/admin/index">Home</a></span>
+                                            <span><i class="mdi mdi-chevron-right"></i></span>Product
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <a href="/admin/product-list" class="btn btn-primary"> View All
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card card-default">
+                                            <div class="card-header card-header-border-bottom">
+                                                <h2>Edit Product</h2>
+                                            </div>
+
+                                            <div class="card-body">
+                                                <form action="/admin/product-edit?id=<%= Products._id %>" method="post"
+                                                    enctype="multipart/form-data">
+                                                    <div class="row ec-vendor-uploads">
+                                                        <div class="col-lg-4">
+                                                            <div class="ec-vendor-img-upload">
+                                                                <div class="ec-vendor-main-img">
+                                                                    <div class="avatar-upload">
+                                                                        <div class="avatar-edit">
+                                                                          
+                                                                            <input type='file' id="imageUpload" name="thumbnail" value="<%= Products.thumbnail ? Products.thumbnail:'' %> "
+                                                                                class="ec-image-upload" src="/productImages/<%= Products.thumbnail %> " accept=".png, .jpg, .jpeg" />
+                                                                            <label for="imageUpload"><img src="/assets/img/icons/edit.svg" class="svg_img header_svg" alt="edit" /></label>
+                                                                        </div>
+                                                                        <div class="avatar-preview ec-preview">
+                                                                            <div class="imagePreview ec-div-preview">
+                                                                                <img class="ec-image-preview" src="/productImages/<%= Products.thumbnail %>" alt="edit" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="thumb-upload-set colo-md-12">
+                                                                        <%Products.image.forEach(items=>{ %> 
+                                                                        <div class="thumb-upload">
+                                                                            <div class="thumb-edit">
+                                                                                <input type='file' id="thumbUpload01"
+                                                                                    name="image" class="ec-image-upload"
+                                                                                    value="<%= items %> "
+                                                                                    src="/public/productImages/<%= Products.image %> "
+                                                                                    accept=".png, .jpg, .jpeg" />
+                                                                                <label for="imageUpload"><img
+                                                                                        src="/assets/img/icons/edit.svg"
+                                                                                        class="svg_img header_svg"
+                                                                                        alt="edit" /></label>
+                                                                            </div>
+                                                                            <div class="thumb-preview ec-preview">
+                                                                                <div class="image-thumb-preview">
+                                                                                    <img class="image-thumb-preview ec-image-preview"
+                                                                                        src="/productImages/<%= items %> "
+                                                                                        alt="edit" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <% }) %> 
+                                                                       
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-8">
+                                                            <div class="ec-vendor-upload-detail">
+                                                                <!-- <form class="row g-3"> -->
+                                                                <div class="col-md-6">
+                                                                    <label for="inputEmail4" class="form-label">Product
+                                                                        name</label>
+                                                                    <input type="text" class="form-control slug-title"
+                                                                        id="inputEmail4" name="title" value="<%=Products.title%>">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">Select Categories</label>
+                                                                    <select name="category" id="Categories"
+                                                                        class="form-select" >
+                                                                        <optgroup label="Categories">
+                                                                            <% Categories.forEach(item =>{ %> 
+                                                                            <option value="<%=Products.category%>"><%=item.catName%></option>
+                                                                            <!-- <option value="<%= item.catName %> "><%= item.catName  %> </option> -->
+                                                                            <% }) %> 
+                                                                            <!-- <option value="Men Fashion">Men Fashion</option>
+                                                                            <option value="Kids Fashion">Kids Fashion</option>
+                                                                            <option value="Footware">Footware</option>
+                                                                            <option value="under-wear">Sport-Wear</option>
+                                                                            <option value="Ornaments">Ornaments</option>
+                                                                            <option value="Bags">Bags</option>
+                                                                            <option value="Cosmatics">Cosmatics</option>
+                                                                            <option value="Perfumes">Perfumes</option>
+                                                                            <option value="Glasses">Glasses</option> -->
+                                                                        </optgroup>
+                                                                        
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Sort Description</label>
+                                                                        <input type="text" class="form-control slug-title" id="inputEmail4" name="description" value="<%= Products.description %>">
+                                                                </div>
+
+                                                                <div class="col-md-8 mb-25"> <label class="form-label">Size</label>
+                                                                    <div class="form-checkbox-box">
+                                                                        <div class="form-check form-check-inline"> <input type="checkbox" name="size" value="small"
+                                                                                <%=Products.size.includes('small') ?'checked':'' %>> <label>S</label> </div>
+                                                                        <div class="form-check form-check-inline"> <input type="checkbox" name="size" value="medium"
+                                                                                <%=Products.size.includes('medium') ?'checked':'' %>> <label>M</label> </div>
+                                                                        <div class="form-check form-check-inline"> <input type="checkbox" name="size" value="large"
+                                                                                <%=Products.size.includes('large') ? 'checked':''%>><label>L</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input type="checkbox" name="size"
+                                                                                value="xLarge"<%= Products.size.includes('xLarge')?'checked':'' %>>
+                                                                            <label>XL</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input type="checkbox" name="size"
+                                                                                value="xxLarge"<%Products.size.includes('xxLarge')?'checked':'' %>>
+                                                                            <label>XXL</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">Price <span>( In USD
+                                                                            )</span></label>
+                                                                    <input type="number" class="form-control"
+                                                                        id="price1" name="price" value="<%= Products.price%>">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="form-label">Quantity</label>
+                                                                    <input type="number" class="form-control"
+                                                                        id="quantity1" name="quantity" value="<%=Products.quantity %>">
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Ful Detail</label>
+                                                                    <textarea class="form-control" rows="4"
+                                                                        name="moreDetails"> <%= Products.moreDetails %></textarea>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Product Tags <span>( Type
+                                                                            and
+                                                                            make comma to separate tags )</span></label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="group_tag" name="group_tag" value="<%= Products.group_tag %>"
+                                                                        placeholder="" data-role="tagsinput" />
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Update</button>
+                                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+    </div> <!-- End Content -->
+    </div> <!-- End Content Wrapper -->
+
+    <!-- Footer -->
+    <footer class="footer mt-auto">
+        <div class="copyright bg-white">
+            <p>
+                Copyright &copy; <span id="ec-year"></span><a class="text-primary"
+                    href="https://themeforest.net/user/ashishmaraviya" target="_blank"> Ekka Admin
+                    Dashboard</a>. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    </div> <!-- End Page Wrapper -->
+    </div> <!-- End Wrapper -->
+
+    <!-- Common Javascript -->
+    <script src="/assets/plugins/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/assets/plugins/jquery/jquery.notify.min.js"></script>
+    <script src="/assets/plugins/jquery/jquery.bundle.notify.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/plugins/tags-input/bootstrap-tagsinput.js"></script>
+    <script src="/assets/plugins/simplebar/simplebar.min.js"></script>
+    <script src="/assets/plugins/jquery-zoom/jquery.zoom.min.js"></script>
+    <script src="/assets/plugins/slick/slick.min.js"></script>
+
+    <!-- Option Switcher -->
+    <script src="/assets/plugins/options-sidebar/optionswitcher.js"></script>
+
+    <!-- Ekka Custom -->
+    <script src="/assets/js/ekka.js"></script>
+</body>
