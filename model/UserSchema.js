@@ -29,12 +29,27 @@ const UserSchema = new mongoose.Schema({
     default:false,
   },
   wishlist:{
-    // items:[{productId:{type:mongoose.Types.ObjectId, ref:"Product",required:true}}]
     type:Array
   },
-  address:{
-    type:Array
-  }
+  address:[
+    {
+      firstName:{type:String},
+      lastName:{type:String},
+      place:{type:String},
+      pinCode:{type:Number,maxLen:6},
+      houseNo:{type:String},
+      landMark:{type:String},
+      country:{type:String},
+      state:{type:String},
+      Email:{type:String},
+
+      phone:{type:String,maxLen:10}    }
+  ],
+  couponId: {
+    type: mongoose.Types.ObjectId,
+    ref:"Coupon",
+    required: true,
+  },
 },
 {
   timestamps:true

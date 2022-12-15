@@ -6,6 +6,8 @@ const Acontroller = require("../controller/adminController");
 const ses = require("../middleware/adminSession");
 const upload = require("../middleware/multer");
 const catUpload = require("../middleware/catMulter");
+const couponControl=require('../controller/coupon')
+const Order=require('../controller/order-controller')
 
 
 router.get("/", Acontroller.loginPage);
@@ -90,6 +92,17 @@ router.post(
   catUpload.uploadProductPic,
   productController.editCategory
 );
+
+router.get('/add-coupon',ses.adminSession,couponControl.addCoupon)
+router.post('/new-coupon',ses.adminSession,couponControl.addNewCoupon)
+router.get("/coupon-list", ses.adminSession, couponControl.viewCoupon);
+router.get('/delete-coupon',ses.adminSession,couponControl.deleteCoupon);
+
+router.get('/view-orders',ses.adminSession,Order.getOrders)
+router.patch("/cancel-Order",ses.adminSession,Order.cancelOrderAsAdmin);
+router.get("/order-details", ses.adminSession, Order.viewOrderDeatails);
+
+
 
 //logout
 router.get("/admin-logout", authController.adminLogout);

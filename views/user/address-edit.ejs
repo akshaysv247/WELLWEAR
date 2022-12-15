@@ -1,0 +1,163 @@
+<% let message=locals.message || null %>
+    <!DOCTYPE html>
+    <html lang="en" class="darkmode" data-theme="light">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WEAR WELL FASHION STORE</title>
+        <!--================= Favicon =================-->
+        <link rel="apple-touch-icon" href="/images/fav.png">
+        <link rel="shortcut icon" type="image/x-icon" href="/images/fav.png">
+        <!--================= Bootstrap V5 CSS =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/bootstrap.min.css">
+        <!--================= Font Awesome 5 CSS =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/all.min.css">
+        <!--================= RT Icons CSS =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/rt-icons.css">
+        <!--================= Animate css =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/animate.min.css">
+        <!--================= Magnific popup Plugin =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/magnific-popup.css">
+        <!--================= Swiper Slider Plugin =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/swiper-bundle.min.css">
+        <!--================= Mobile Menu CSS =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/metisMenu.css">
+        <!--================= Main Menu CSS =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/rtsmenu.css">
+        <!--================= Preloader CSS =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/preloader.css">
+        <!--================= Main Stylesheet =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/variables/variable1.css">
+        <!--================= Main Stylesheet =================-->
+        <link rel="stylesheet" type="text/css" href="/Stylesheets/main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+            integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <%- include('partials/user-navbar2') %>
+        <!-- form section starts here.... -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 mb-4">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">Address details</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/edited-address" method="Post">
+                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form7Example1">First name</label>
+                                        <input type="text" name="firstName" value="<%= addresses.firstName %> " id="form7Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form7Example2">Last name</label>
+                                        <input type="text" name="lastName" value="<%= addresses.lastName %> " id="form7Example2" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form7Example1">Place</label>
+                                        <input type="text" name="place" value="<%= addresses.place %> " id="form7Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form7Example2">PIN code</label>
+                                        <input type="text" name="pinCode" value="<%= addresses.pinCode %> " id="form7Example2" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form7Example1">House No:/flat.No:</label>
+                                        <input type="text" name="houseNo" value="<%= addresses.houseNo %> " id="form7Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form7Example2">LandMark</label>
+                                        <input type="text" name="landMark" value="<%= addresses.landMark %> " id="form7Example2" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form7Example1">Country</label>
+                                        <input type="text" name="country" value="<%= addresses.country %> " id="form7Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form7Example2">State</label>
+                                        <input type="text" name="state" value="<%= addresses.state %> " id="form7Example2" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form7Example5">Email</label>
+                                <input type="email" name="Email" value="<%= addresses.Email %> " id="form7Example5" class="form-control" />
+                            </div>
+
+                            <!-- Number input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form7Example6">Phone</label>
+                                <input type="phone" name="phone" value="<%= addresses.phone %> " id="form7Example6" class="form-control" />
+                            </div>
+                            <% if(message){ %>
+                                <p style="color:red">
+                                    <%= message %> !
+                                </p>
+                                <% } %>
+                                    <div class="d-flex justify-content-center">
+                                        <button class="btn btn-outline-danger" type="submit">UPDATE ADDRESS</button>
+                                    </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+
+        <%- include('partials/user-footer') %>
+
+            <body>
+                <!--================= Preloader Section Start Here =================-->
+                <!--================= Jquery latest version =================-->
+                <script src="/js/vendors/jquery-3.6.0.min.js"></script>
+                <!--================= Bootstrap latest version =================-->
+                <script src="/js/vendors/bootstrap.min.js"></script>
+                <!--================= Wow.js =================-->
+                <script src="/js/vendors/wow.min.js"></script>
+                <!--================= Swiper Slider =================-->
+                <script src="/js/vendors/swiper-bundle.min.js"></script>
+                <!--================= Nice Select =================-->
+                <script src="/js/vendors/jquery.nice-select.js"></script>
+                <!--================= Zoom Plugin =================-->
+                <script src="/js/vendors/zoom.js"></script>
+                <!--================= metisMenu Plugin =================-->
+                <script src="/js/vendors/metisMenu.min.js"></script>
+                <!--================= Main Menu Plugin =================-->
+                <script src="/js/vendors/rtsmenu.js"></script>
+                <!--================= Magnefic Popup Plugin =================-->
+                <script src="/js/vendors/isotope.pkgd.min.js"></script>
+                <!--================= Magnefic Popup Plugin =================-->
+                <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
+                <!--================= Main Script =================-->
+                <script src="/js/main.js"></script>
+            </body>

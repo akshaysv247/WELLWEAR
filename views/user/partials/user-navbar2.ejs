@@ -34,24 +34,19 @@
         <div class="container">
             <div class="header-top-area">
                 <div class="slider-div">
-                    <div class="swiper rts-topSlide1">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
-                                        Now</a></h3>
-                            </div>
-                            <div class="swiper-slide">
-                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
-                                        Now</a></h3>
-                            </div>
-                            <div class="swiper-slide">
-                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
-                                        Now</a></h3>
-                            </div>
-                            <div class="swiper-slide">
-                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
-                                        Now</a></h3>
-                            </div>
+                    <div class="">
+                        <div class="">
+                            <% if(user) {%>
+                                <div class="swiper-slide">
+                                    <h3 class="welcome-text">Hii <a href="/myAc">
+                                            <%=user.username %>
+                                        </a></h3>
+                                </div>
+                                <% }else{ %>
+                                    <div class="swiper-slide">
+                                        <h3 class="welcome-text"> welcome...<a href="#">TO WELLWEAR </a></h3>
+                                    </div>
+                                    <% } %>
                         </div>
                         <div class="slider-navigation2">
                             <div class="swiper-button-prev slider-btn prev"><i class="rt rt-arrow-left-long"></i>
@@ -81,7 +76,7 @@
                 </div>
                 <% if(user){ %>
                     <div class="menu-area-right-side">
-                        <div class="contact"><a href="/logout" class="account">
+                        <div class="contact"><a href="/user-logout" class="account">
                                 <i area-hidden="true" class="fa-regular fa-user">Sign Out</i>
                             </a>
                         </div>
@@ -145,18 +140,21 @@
                                             </li>
                                         </ul>
                                     </li> -->
-                                    <li class="has-dropdown"><a class="menu-item" href="#">All Categories <i class="rt-plus"></i></a>
-                                        <ul class="dropdown-ul">
-                                            <% Categories.forEach(item=>{%>
-                                                <li class="dropdown-li"><a class="dropdown-link" href="/shop"><%= item.catName %></a>
-                                                </li>
-                                           <% }) %> 
-                                            
-                                        </ul>
-                                    </li>
+                                <li class="has-dropdown"><a class="menu-item" href="#">All Categories <i
+                                            class="rt-plus"></i></a>
+                                    <ul class="dropdown-ul">
+                                        <% Categories.forEach(item=>{%>
+                                            <li class="dropdown-li"><a class="dropdown-link" href="/shop">
+                                                    <%= item.catName %>
+                                                </a>
+                                            </li>
+                                            <% }) %>
+
+                                    </ul>
+                                </li>
                                 <li class="has-dropdown"><a class="menu-item" href="/shop">Shop </a>
 
-                                
+
                                 <li><a class="menu-item" href="/contact">Contact</a></li>
                             </ul>
                         </nav>

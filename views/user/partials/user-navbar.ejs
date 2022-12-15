@@ -1,3 +1,4 @@
+
 <div id="weiboo-load">
     <div class="preloader-new">
         <svg class="cart_preloader" role="img" aria-label="Shopping cart_preloader line animation" viewBox="0 0 128 128"
@@ -37,21 +38,13 @@
                         <div class="swiper-wrapper">
                             <% if(user) {%> 
                             <div class="swiper-slide">
-                                <h3 class="welcome-text">Hii <a href="#"><% user.username %></a></h3>
+                                <h3 class="welcome-text">Hii <a href="/myAc"><%=user.username %></a></h3>
                             </div>
+                            <% }else{ %> 
                             <div class="swiper-slide">
                                 <h3 class="welcome-text"> welcome...<a href="#">TO WELLWEAR </a></h3>
                                 </div>
-                                <% }else{ %> 
-                            <div class="swiper-slide">
-                                <h3 class="welcome-text"> Please Login to get Better shoping experience<a href="#">Discover
-                                        Now</a></h3>
-                            </div>
-                            <% } %> 
-                            <div class="swiper-slide">
-                                <h3 class="welcome-text"> Open Door To A worlds Of Fashion<a href="#">Discover
-                                        Now</a></h3>
-                            </div>
+                                <% } %> 
                         </div>
                         <div class="slider-navigation2">
                             <div class="swiper-button-prev slider-btn prev"><i class="rt rt-arrow-left-long"></i>
@@ -122,31 +115,11 @@
                         <nav class="menus menu-toggle">
                             <ul class="nav__menu">
                                 <li class="has-dropdown"><a class="menu-item active1" href="/home">Home </a>
-                                    <!-- <ul class="dropdown-ul">
-                                        <li class="dropdown-li"><a class="dropdown-link active" href="/home">Main
-                                                Home</a>
-                                        </li>
-                                        <li class="dropdown-li"><a class="dropdown-link" href="index-two.html">Fashion
-                                                </a>
-                                        </li>
-                                        
-                                        <li class="dropdown-li"><a class="dropdown-link" href="index-four.html">Decor
-                                                Home</a>
-                                        </li>
-                
-                                        <li class="dropdown-li"><a class="dropdown-link" href="index-six.html">Grocery
-                                                Home</a>
-                                        </li>
-                                        <li class="dropdown-li"><a class="dropdown-link"
-                                                href="index-seven.html">Footwear
-                                                Home</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
+                                    
                                 <li class="has-dropdown"><a class="menu-item" href="#">All Categories <i class="rt-plus"></i></a>
                                     <ul class="dropdown-ul">
                                         <% Categories.forEach(item=>{ %>
-                                            <li class="dropdown-li"><a class="dropdown-link" href="/shop">
+                                            <li class="dropdown-li"><a class="dropdown-link" href="/get-cat-item?id=<%= item._id %> ">
                                                     <%= item.catName %>
                                                 </a>
                                             </li>
@@ -156,69 +129,7 @@
                                 </li>
 
                                 <li class="has-dropdown"><a class="menu-item" href="/shop">Shop </a>
-                                    <!-- <ul class="dropdown-ul mega-dropdown">
-                                        <li class="mega-dropdown-li">
-                                            <ul class="mega-dropdown-ul">
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="/shop">Shop</a>
-                                                </li>
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="slidebar-left.html">Left Sidebar Shop</a>
-                                                </li>
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="slidebar-right.html">Right Sidebar Shop</a>
-                                                </li>
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="full-width-shop.html">Full Width Shop</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega-dropdown-li">
-                                            <ul class="mega-dropdown-ul">
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="product-details.html">Single Product Layout One</a>
-                                                </li>
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="product-details2.html">Single Product Layout Two</a>
-                                                </li>
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="variable-products.html">Variable
-                                                        Product</a>
-                                                </li>
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="grouped-products.html">Grouped
-                                                        Product</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega-dropdown-li last-child">
-                                            <ul class="mega-dropdown-ul">
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="/cart">Cart</a>
-                                                </li>
-
-                                                <li class="dropdown-li"><a class="dropdown-link2"
-                                                        href="checkout.html">Checkout</a>
-                                                </li>
-                                                <li class="dropdown-li"><a class="dropdown-link2" href="/account">My
-                                                        Account</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li> -->
-
-                                    <!-- <li class="has-dropdown"><a class="menu-item" href="#">Pages <i class="rt-plus"></i></a>
-                                    <ul class="dropdown-ul">
-                                        <li class="dropdown-li"><a class="dropdown-link" href="about.html">About</a>
-                                        </li>
-                                        <li class="dropdown-li"><a class="dropdown-link" href="faq.html">FAQ's</a>
-                                        </li>
-                                        <li class="dropdown-li"><a class="dropdown-link" href="error.html">Error
-                                                404</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
+                                    
 
                                 <li><a class="menu-item" href="/contact">Contact</a></li>
                             </ul>
@@ -258,7 +169,7 @@
                             <div class="cart-nav">
                                 <div class="cart-icon icon"><a href="/cart"><i aria-hidden="true"
                                             class="fas fa-shopping-basket"></i></a><span
-                                        class="wishlist-dot icon-dot">3</span></div>
+                                        class="wishlist-dot icon-dot"> </span></div>
                             </div>
                         </div>
                         <a href="/wishlist" class="account"><i class="fa-regular fa-heart"></i></a>

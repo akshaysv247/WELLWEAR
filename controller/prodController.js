@@ -1,5 +1,6 @@
 const Product = require("../model/productSchema");
 const path = require("path");
+const mongoose=require('mongoose')
 const { findOne } = require("../model/UserSchema");
 const Category = require("../model/categorySchema");
 // const multer=require('multer')
@@ -32,6 +33,7 @@ module.exports = {
   editProduct: async (req, res) => {
     id = req.query.id;
     data = req.body;
+    console.log(data)
     await Product.updateOne(
       { _id: id },
       {
@@ -60,13 +62,14 @@ module.exports = {
   addCategory: async (req, res) => {
     console.log(req.body);
     let catMessage;
-    if (!req.body.catName || !req.body.catImage) {
+    if (!req.body.catName || !req.body.thumbnail) {
       catMessage = "Please fill all the fields";
       res.locals.catMessage = catMessage;
       return res.render("admin/main-category");
     }
     Category.create(req.body)
       .then((result) => {
+        console.log('kjvdfngfojgnjfgn;kjg;kdafgjk;dg;kabgkfbg')
         res.redirect("/admin/list-category");
       })
       .catch((err) => {
@@ -79,7 +82,9 @@ module.exports = {
   },
   getCategoryDetails: async (req, res) => {
     id = req.params.id;
+    console.log("kdlsn",id)
     let Categories = await Category.findOne({ _id: id });
+    console.log(Categories)
     res.render('admin/edit-category', { Categories });
   },
   deleteCategory: async (req, res) => {
@@ -90,6 +95,7 @@ module.exports = {
   editCategory: async (req, res) => {
     id = req.params.id;
     cat = req.body;
+    console.log("fkjfjn gkda gk ",cat,id)
     await Category.updateOne(
       { _id: id },
       {

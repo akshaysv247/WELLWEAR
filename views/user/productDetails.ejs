@@ -43,40 +43,37 @@
     <div class="container">
         <div class="details-product-area mb--70">
             <div class="product-thumb-area">
-                <% Products.forEach(Product=>{ %> 
                 <div class="cursor"></div>
                 <div class="thumb-wrapper one filterd-items figure">
                     <div class="product-thumb zoom" onmousemove="zoom(event)"
-                        style="background-image: url(assets/images/products/product-details.jpg)"><img
-                            src="/productImages/<%= Product.image[0] %> " alt="product-thumb">
+                        style="background-image: url(/productImages/<%=Products.thumbnail%>)"><img
+                            src="/productImages/<%= Products.thumbnail %> " alt="product-thumb">
                     </div>
                 </div>
                 <div class="thumb-wrapper two filterd-items hide">
                     <div class="product-thumb zoom" onmousemove="zoom(event)"
-                        style="background-image: url(assets/images/products/product-filt2.jpg)"><img
-                            src="/productImages/<%= Product.image[1] %>" alt="product-thumb">
+                        style="background-image: url(/productImages/<%=Products.image[0]%>)"><img
+                            src="/productImages/<%= Products.image[0] %>" alt="product-thumb">
                     </div>
                 </div>
                 <div class="thumb-wrapper three filterd-items hide">
                     <div class="product-thumb zoom" onmousemove="zoom(event)"
-                        style="background-image: url(assets/images/products/product-filt3.jpg)"><img
-                            src="/productImages/<%= Product.image[1] %> " alt="product-thumb">
+                        style="background-image: url(/productImages/<%=Products.image[1]%>)"><img
+                            src="/productImages/<%= Products.image[1] %> " alt="product-thumb">
                     </div>
                 </div>
                 <div class="product-thumb-filter-group">
                     <div class="thumb-filter filter-btn active" data-show=".one"><img
-                            src="/productImages/<%= Product.image[2] %>" alt="product-thumb-filter"></div>
+                            src="/productImages/<%= Products.image[2] %>" alt="product-thumb-filter"></div>
                     <div class="thumb-filter filter-btn" data-show=".two"><img
-                            src="/productImages/<%= Product.image[3] %> " alt="product-thumb-filter"></div>
+                            src="/productImages/<%= Products.image[3] %> " alt="product-thumb-filter"></div>
                     <div class="thumb-filter filter-btn" data-show=".three"><img
-                            src="/productImages/<%= Product.image[4] %> " alt="product-thumb-filter"></div>
+                            src="/productImages/<%= Products.image[4] %> " alt="product-thumb-filter"></div>
                 </div>
-                <% }) %> 
             </div>
-            <% Products.forEach(element=>{ %> 
             <div class="contents">
                 <div class="product-status">
-                    <span class="product-catagory"><%= element.category %> </span>
+                    <span class="product-catagory"><%= Products.category %> </span>
                     <div class="rating-stars-group">
                         <div class="rating-star"><i class="fas fa-star"></i></div>
                         <div class="rating-star"><i class="fas fa-star"></i></div>
@@ -84,11 +81,11 @@
                         <span>10 Reviews</span>
                     </div>
                 </div>
-                <h2 class="product-title"><%= element.title %> <span class="stock">In Stock</span></h2>
-                <span class="product-price"><span class="old-price">$9.35</span><%= element.price %> </span>
+                <h2 class="product-title"><%= Products.title %> <span class="stock">In Stock</span></h2>
+                <span class="product-price"><span class="old-price">$9.35</span><%= Products.price %>.$ </span>
                 <p>
-                    WEARWELL has brought to you the <%= element.title %> . It is a
-                    completely modern design and you feel comfortable to put on this <%= element.title %> .
+                    WEARWELL has brought to you the <%= Products.title %> . It is a
+                    completely modern design and you feel comfortable to put on this <%= Products.title %> .
                     Buy it at the best price.
                 </p>
                 <div class="product-bottom-action">
@@ -99,9 +96,9 @@
                             <button class="button plus">+<i class="fal fa-plus plus"></i></button>
                         </div>
                     </div>
-                    <a href="/add-cart?id=<%= element._id %>" class="addto-cart-btn action-item"><i class="rt-basket-shopping"></i> Add To
+                    <a onclick="addToCart('<%= Products._id %>')" class="addto-cart-btn action-item" id="to-cart-btn"><i class="rt-basket-shopping"></i> Add To
                         Cart</a>
-                    <a href="/wishlist" class="wishlist-btn action-item"><i class="rt-heart"></i></a>
+                    <a onclick="addToWishlist('<%= Products._id %>')" class="wishlist-btn action-item" id="to-wishlist"><i class="rt-heart"></i></a>
                 </div>
                 <div class="product-uniques">
                     <!-- <span class="sku product-unipue"><span>SKU: </span> BO1D0MX8SJ</span> -->
@@ -117,7 +114,6 @@
                     <a class="platform" href="http://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
-            <% }) %> 
         </div>
         <div class="product-full-details-area">
             <div class="details-filter-bar2">
@@ -253,14 +249,14 @@
                 </div>
             </div>
             <div class="row">
+                <% for(let i=0;i<product;i++){ %> 
                 <div class="col-xl-3 col-md-4 col-sm-6 col-12">
-                    <% Products.forEach(Product=>{ %> 
                     <div class="product-item element-item1">
                         <a href="/product-details" class="product-image image-hover-variations">
-                            <div class="image-vari1 image-vari"><img src="/productImages/<%= Product.image[1] %> "
+                            <div class="image-vari1 image-vari"><img src="/productImages/<%= product[i].image[1] %> "
                                     alt="product-image">
                             </div>
-                            <div class="image-vari2 image-vari"><img src="/productImage/<%= Product.image[0] %> "
+                            <div class="image-vari2 image-vari"><img src="/productImage/<%= product[i].image[0] %> "
                                     alt="product-image">
                             </div>
                         </a>
@@ -272,9 +268,9 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                             </div>
-                            <a href="/product-details?id=<%= Product._id %>" class="product-name">Girl's Sport Bra</a>
+                            <a href="/product-details?id=<%= product[i]._id %>" class="product-name">Girl's Sport Bra</a>
                             <div class="action-wrap">
-                                <span class="price"><%= Product.price %> </span>
+                                <span class="price"><%= product[i].price %> </span>
                             </div>
                         </div>
                         <div class="quick-action-button">
@@ -282,24 +278,142 @@
                                 <a href="#"><i class="rt-plus"></i></a>
                             </div>
                             <div class="cta-single cta-quickview">
-                                <a href="/product-details<%= Product._id %>"><i class="far fa-eye"></i></a>
+                                <a href="/product-details<%= product[i]._id %>"><i class="far fa-eye"></i></a>
                             </div>
-                            <div class="cta-single cta-wishlist">
-                                <a href="/add-wishlist?id=<%= Product._id %>"><i class="far fa-heart"></i></a>
+                            <div class="cta-single cta-wishlist" id="to-wishlist">
+                                <a onclick="addToWishlist('<%= product[i]._id %>')"><i class="far fa-heart"></i></a>
                             </div>
-                            <div class="cta-single cta-addtocart">
-                                <a href="/add-cart?id=<%= Product._id %>"><i class="rt-basket-shopping"></i></a>
+                            <div class="cta-single cta-addtocart" id="to-cart-btn">
+                                <a onclick="addToCart('<%= product[i]._id %>')"><i class="rt-basket-shopping"></i></a>
                             </div>
                         </div>
                     </div>
-                    <% }) %> 
+                    <% } %> 
                 </div>                
             </div>
         </div>
     </div>
 </div>
+<script>
+    async function addToWishlist(productId) {
+        console.log(productId)
+        $.ajax({
+            url: `/add-wishlist?id=${productId}`,
+            method: 'PATCH',
+            data: {
+                productId
+            },
+            success: (response) => {
+                if (response.status === 'success') {
+                    $('#to-wishlist' + productId).children('i')
+                        .addClass('far fa-heart')
+                        .removeClass('far fa-heart_alt')
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        psoition: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        },
+                    });
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'added to wishlist'
+                    })
+                }
+                else if (response.status === 'removed') {
+                    $('#to-wishlist-btn' + productId)
+                        .children('i')
+                        .addClass("far fa-heart")
+                        .removeClass('far fa-heart_alt')
+                    const Toast = Swal.fire({
+                        toast: true,
+                        psoition: top - end,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                            toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        },
+                    })
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Removed from wishlist'
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'oops',
+                        text: 'Something went wrong'
+                    })
+                }
+            }
+        })
+    }
+    async function addToCart(productId) {
+        console.log(productId)
+        $.ajax({
+            url: `/add-cart?id=${productId}`,
+            method: 'PATCH',
+            data: {
+                productId,
+            },
+            success: (response) => {
+                if (response.status == true) {
+                    $('#to-cart-btn' + productId).css({ color: '19dc26' })
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListner('mouseenter', Swal.stopTimer);
+                            toast.addEventListner('mouseleave', Swal.resumeTimer);
+                        },
+                    });
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'added to cart',
+                    });
+                    console.log(response)
+                } else if (response.status == "already") {
+                    $('#to-cart-btn' + productId).css({ color: '19dc26' })
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'already exist in cart',
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops',
+                        text: 'something went wrong'
+                    })
 
-<%- include'(partials/user-footer.ejs')%> 
+                }
+            }
+        })
+    }
+</script>
+
+<%- include('partials/user-footer.ejs')%> 
 
 <body>
     <!--================= Preloader Section Start Here =================-->
@@ -325,4 +439,5 @@
     <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
     <!--================= Main Script =================-->
     <script src="/js/main.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>

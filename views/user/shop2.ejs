@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="darkmode" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEAR WELL FASHION STORE</title>
+    <!--================= Favicon =================-->
+    <link rel="apple-touch-icon" href="/images/fav.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/fav.png">
+    <!--================= Bootstrap V5 CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/bootstrap.min.css">
+    <!--================= Font Awesome 5 CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/all.min.css">
+    <!--================= RT Icons CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/rt-icons.css">
+    <!--================= Animate css =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/animate.min.css">
+    <!--================= Magnific popup Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/magnific-popup.css">
+    <!--================= Swiper Slider Plugin =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/swiper-bundle.min.css">
+    <!--================= Mobile Menu CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/metisMenu.css">
+    <!--================= Main Menu CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/rtsmenu.css">
+    <!--================= Preloader CSS =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/preloader.css">
+    <!--================= Main Stylesheet =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/variables/variable1.css">
+    <!--================= Main Stylesheet =================-->
+    <link rel="stylesheet" type="text/css" href="/Stylesheets/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+
+
+    <%- include('partials/user-navbar2') %>
+        <!--================= Header Section End Here =================-->
+
+        <!--================= Shop Section Start Here =================-->
+        <div class="rts-shop-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-9">
+                        <div class="shop-product-topbar">
+                            <span class="items-onlist">Showing 1-12 of 70 results</span>
+                            <div class="filter-area">
+                                <p class="select-area">
+                                    <select class="select">
+                                        <option value="*">Sort by average rating</option>
+                                        <option value=".popular">Sort by popularity</option>
+                                        <option value=".best-rate">Sort by latest</option>
+                                        <option value=".on-sale">Sort by price: low to high</option>
+                                        <option value=".featured">Sort by price: high to low</option>
+                                    </select>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="products-area products-area3">
+                            <div class="row justify-content-center">
+                                <% products.forEach(element=>{ %>
+                                    <div class="col-xl-4 col-md-4 col-sm-6">
+                                        <div class="product-item product-item2 element-item3">
+                                            <a href="/product-details/<%= element._id %> " class="product-image">
+                                                <img src="/productImages/<%= element.image[1]  %> " alt="product-image">
+                                            </a>
+                                            <div class="bottom-content">
+                                                <a href="/product-details/<%= element._id %>" class="product-name">
+                                                    <%= element.title %>
+                                                </a>
+                                                <div class="action-wrap" id="to-cart-btn<%= element._id %>">
+                                                    <span class="product-price">
+                                                        <%= element.price %>.$
+                                                    </span>
+                                                    <a onclick="addToCart('<%= element._id %>')" class="addto-cart"><i
+                                                            class="fal fa-shopping-cart"></i>
+                                                        Add To
+                                                        Cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="product-actions" id="to-wishlist-btn<%= element._id %>">
+                                                <a onclick="addToWishlist('<%= element._id %>')"
+                                                    class="product-action"><i class="fal fa-heart"></i></a>
+                                                <button class="product-action product-details-popup-btn"><i
+                                                        class="fal fa-eye"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                        </div>
+                        <div class="product-pagination-area mt--20">
+                            <button class="prev"><i class="far fa-long-arrow-left"></i></button>
+                            <button class="number active">01</button>
+                            <button class="number">02</button>
+                            <button class="skip-number">---</button>
+                            <button class="number">07</button>
+                            <button class="number">08</button>
+                            <button class="next"><i class="far fa-long-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="side-sticky">
+                            <div class="shop-side-action">
+                                <div class="action-item">
+                                    <div class="action-top">
+                                        <span class="action-title">PRODUCT CATEGORY</span>
+                                    </div>
+                                    <% Categories.forEach(item=>{ %>
+                                        <div class="category-item">
+                                            <div class="category-item-inner">
+                                                <div class="category-title-area">
+                                                    <span class="point"></span>
+                                                    <span class="category-title">
+                                                        <a href="/get-cat-item?id=<%= item._id %>"><%= item.catName %></a>
+                                                    </span>
+                                                </div>
+
+                                                <div class="down-icon"><i class="far fa-angle-down"></i></div>
+                                            </div>
+                                            <!-- <div class="sub-categorys">
+                                        <ul class="sub-categorys-inner">
+                                            <li><span class="point"></span><a href="/shop">Clothes</a></li>
+                                            <li><span class="point"></span><a href="/shop">Shoes</a></li>
+                                            <li><span class="point"></span><a href="/shop">Toys</a></li>
+                                        </ul>
+                                    </div> -->
+                                        </div>
+                                        <% }) %>
+                                            <!-- <div class="action-item">
+                                <div class="action-top">
+                                    <span class="action-title">FILTER BY PRICE</span>
+                                </div>
+                                <div class="nstSlider" data-range_min="50" data-range_max="20000" data-cur_min="20"
+                                    data-cur_max="10000">
+
+                                    <div class="bar"></div>
+                                    <div class="leftGrip price-range-grip"></div>
+                                    <div class="rightGrip price-range-grip"></div>
+                                </div>
+                                <div class="range-label-area">
+                                    <div class="min-price d-flex">
+                                        <span class="range-lbl">Min:</span>
+                                        <span class="currency-symbol">$</span>
+                                        <div class="leftLabel price-range-label"></div>
+                                    </div>
+                                    <div class="min-price d-flex">
+                                        <span class="range-lbl">Max:</span>
+                                        <span class="currency-symbol">$</span>
+                                        <div class="rightLabel price-range-label"></div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                                            <div>
+                                                <a href="/shop" class="banner-item">
+                                                    <div class="banner-inner">
+                                                        <span class="pretitle">Winter Fashion</span>
+                                                        <h1 class="title">Behind the
+                                                            deseart</h1>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--================= Shop Section Section End Here =================-->
+            <script>
+                async function addToWishlist(productId) {
+                    console.log(productId)
+                    $.ajax({
+                        url: `/add-wishlist?id=${productId}`,
+                        method: 'PATCH',
+                        data: {
+                            productId
+                        },
+                        success: (response) => {
+                            if (response.status === 'success') {
+                                $('#to-wishlist' + productId).children('i')
+                                    .addClass('far fa-heart')
+                                    .removeClass('far fa-heart_alt')
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    psoition: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    },
+                                });
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'added to wishlist'
+                                })
+                            }
+                            else if (response.status === 'removed') {
+                                $('#to-wishlist-btn' + productId)
+                                    .children('i')
+                                    .addClass("rt-heart")
+                                    .removeClass('rt-heart_alt')
+                                const Toast = Swal.fire({
+                                    toast: true,
+                                    psoition: top - end,
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer);
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer);
+                                    },
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Removed from wishlist'
+                                })
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'oops',
+                                    text: 'Something went wrong'
+                                })
+                            }
+                        }
+                    })
+                }
+                async function addToCart(productId) {
+                    console.log(productId)
+                    $.ajax({
+                        url: `/add-cart?id=${productId}`,
+                        method: 'PATCH',
+                        data: {
+                            productId,
+                        },
+                        success: (response) => {
+                            if (response.status == true) {
+                                $('#to-cart-btn' + productId).css({ Backgroundcolor: '19dc26' })
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListner('mouseenter', Swal.stopTimer);
+                                        toast.addEventListner('mouseleave', Swal.resumeTimer);
+                                    },
+                                });
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'added to cart',
+                                });
+                                console.log(response)
+                            } else if (response.status == "already") {
+                                $('#to-cart-btn' + productId).css({ color: '19dc26' })
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListner('mouseenter', Swal.stopTimer);
+                                        toast.addEventListner('mouseleave', Swal.resumeTimer);
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'already exist in cart',
+                                })
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops',
+                                    text: 'something went wrong'
+                                })
+
+                            }
+                        }
+                    })
+                }
+            </script>
+
+            <!--================= Footer Start Here =================-->
+            <%- include('partials/user-footer.ejs') %>
+
+                <!--================= Jquery latest version =================-->
+                <script src="/js/vendors/jquery-3.6.0.min.js"></script>
+                <!--================= Bootstrap latest version =================-->
+                <script src="/js/vendors/bootstrap.min.js"></script>
+                <!--================= Wow.js =================-->
+                <script src="/js/vendors/wow.min.js"></script>
+                <!--================= Swiper Slider =================-->
+                <script src="/js/vendors/swiper-bundle.min.js"></script>
+                <!--================= Nice Select =================-->
+                <script src="/js/vendors/jquery.nice-select.js"></script>
+                <!--================= Zoom Plugin =================-->
+                <script src="/js/vendors/zoom.js"></script>
+                <!--================= metisMenu Plugin =================-->
+                <script src="/js/vendors/metisMenu.min.js"></script>
+                <!--================= Main Menu Plugin =================-->
+                <script src="/js/vendors/rtsmenu.js"></script>
+                <!--================= Magnefic Popup Plugin =================-->
+                <script src="/js/vendors/isotope.pkgd.min.js"></script>
+                <!--================= Magnefic Popup Plugin =================-->
+                <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
+                <!--================= Main Script =================-->
+                <script src="/js/main.js"></script>
+                <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>

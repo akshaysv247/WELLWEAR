@@ -61,3 +61,54 @@
 <!--================= Main Script =================-->
 <script src="/js/main.js"></script>
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-xl-5 col-md-5">
+    <div class="shipping-address" id="address-box<%= index %>">
+        <h4 class="mb--30">Shipping Address</h4>
+        <address>
+            Name:<%= element.firstName %>
+                <%= element.lastName %> <br>
+                    HouseNo:<%= element.houseNo %><br>
+                        place:<%= element.place %> <br>
+                            State:<%= element.state %> <br>PIN:<%= element.pinCode %>
+                                    <br>Phone:<%= element.phone %>
+        </address>
+        <p class="mb--10">Country:<%= element.country %>
+        </p>
+        <a href="/edit-address?id=<%= element._id %> " class="btn btn-outline-primary">Edit</a>
+        <a onclick="deleteAddress('<%= element._id %> ','<%= index %>')" class="btn btn-outline-danger">Delete</a>
+    </div>
+</div>
+
+
+        <div class="card-header">Address</div>
+        <div class="card-body text-danger">
+            <h5 class="card-title">
+                <%= element.firstName %>
+                    <%= element.lastName %>
+            </h5>
+            <p class="card-text">
+                <%= element.houseNo %>,
+                    <%= element.place %>,
+                        <%= element.landMark %>,
+                            <%= element.pinCode %>
+                                <%= element.state %> ,<%= element.country %>
+        
+                                        <%= element.phone %>
+                                            <%= element.Email %>
+            </p>
+            <input class="with-gap" name="group1" type="radio" id="test1" value="<%=element._id%>" />
+        
+        </div>
+        </div>

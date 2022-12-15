@@ -35,91 +35,198 @@
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-   
 
-<%- include('partials/user-navbar2')%> 
 
-<!--================= Cart Section Start Here =================-->
+<%- include('partials/user-navbar2')%>
+
+    <!--================= Cart Section Start Here =================-->
     <div class="rts-wishlist-section section-gap">
         <div class="container">
-            <table class="table table-bordered table-hover">
-                <tbody>
-                    <tr class="heading">
-                        <th></th>
-                        <th>Product Name</th>
-                        <th>Unit Price</th>
-                        <th>Stock Status</th>
-                        <th></th>
-                    </tr>
-                </tbody>
-                 
-                <tbody>
-                    <% if (products) { %>
-                     
-                    <% products.forEach(item=>{ %>
-                    <tr>
-                        <td class="first-td"><a href="/delete-wish?id=<% item._id %>"><button class="remove-btn"><i class="fal fa-times"></i></button></a></td>
-                        <td class="first-child"><a href="/product-details"><img style="height:200px; width:auto;"
-                                    src="/productImages/<%= item.image[1]%>"></a>
-                            <a href="/product-details" class="pretitle"><%= item.title %> </a>
-                        </td>
-                        </td>
-                        <td><span class="product-price"><%= item.price %> </span></td>
-                        <% if(item.quantity==0){ %>
-                           <td class="stock"><p style="color:red">Out of Stock</p></td>
-                           <% }else{ %> 
-                        <td class="stock"><p style="color:green">In Stock</p></td>
-                        <% } %> 
-                        </td>
-                        <td class="last-td"><a href="/add-cart?id=<%=item._id %>"><button class="cart-btn"><i class="rt-basket-shopping"></i> Add To
-                                Cart</button></a></td>
-                    </tr>
-                    <% }) %>
-                    <% } %>
-                </tbody>
-                 
-                </table>
-            <div class="wishlist-social">
-                <div class="text">
-                    <a href="#">Share Now</a>
-                </div>
-                <div class="icon">
-                    <ul>
-                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-behance"></i></a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                    </ul>
+            <div class="row">
+                <div class="col-xl-12 ">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                            <tr class="heading">
+                                <th></th>
+                                <th>Product</th>
+                                <th>Unit Price</th>
+                                <th>Stock Status</th>
+                                <th></th>
+                            </tr>
+                        </tbody>
+
+                        <tbody>
+                            <% if (products) { %>
+
+                                <% for(let i=0;i<products.length;i++){ %>
+                                    <tr id="productDiv<%= products[i].Product._id%>">
+                                        <td class="first-td"><a
+                                                onclick="removeFromWish('<%= products[i].Product._id%>')"><button
+                                                    class="remove-btn"><i class="fal fa-times"></i></button></a></td>
+                                        <td class="first-child"><a href="/product-details"><img
+                                                    style="height:200px; width:auto;"
+                                                    src="/productImages/<%= products[i].Product?.thumbnail%>"></a>
+                                            <a href="/product-details" class="pretitle">
+                                                <%= products[i].Product?.title %>
+                                            </a>
+                                        </td>
+                                        </td>
+                                        <td><span class="product-price">
+                                                <%= products[i].Product?.price %>.$
+                                            </span></td>
+                                        <% if(products[i].Product?.quantity==0){ %>
+                                            <td class="stock">
+                                                <p style="color:red">Out of Stock</p>
+                                            </td>
+                                            <% }else{ %>
+                                                <td class="stock">
+                                                    <p style="color:green">In Stock</p>
+                                                </td>
+                                                <% } %>
+                                                    </td>
+                                                    <td class="last-td" id="to-cart-btn<%=products[i].Product._id %>"><a
+                                                            onclick="addToCart('<%=products[i].Product._id %>')"><button
+                                                                class="cart-btn"><i class="rt-basket-shopping"></i> Add
+                                                                To
+                                                                Cart</button></a></td>
+                                    </tr>
+                                    <% } %>
+                                        <% } %>
+                        </tbody>
+
+                    </table>
+                    <div class="wishlist-social">
+                        <div class="text">
+                            <a href="#">Share Now</a>
+                        </div>
+                        <div class="icon">
+                            <ul>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+    <script>
+        async function removeFromWish(proId) {
+            $.ajax({
+                url: `/delete-wish?id=${proId}`,
+                method: 'PATCH',
+                data: {
+                    proId,
+                },
+                success: (response) => {
+                    if (response.status === true) {
+                        $('#productDiv' + proId).remove()
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            psoition: 'top-end',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer);
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            },
+                        });
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Item removed',
+                        })
+                    } else {
+                        Swal.fire('something went wrong')
+                    }
+                }
+            })
+        }
+        async function addToCart(productId) {
+            console.log(productId)
+            $.ajax({
+                url: `/add-cart?id=${productId}`,
+                method: 'PATCH',
+                data: {
+                    productId,
+                },
+                success: (response) => {
+                    if (response.status == true) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            psoition: 'top-end',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer);
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            },
+                        });
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'added to cart',
+                        });
+                        console.log(response)
+                    } else if (response.status == true) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            psoition: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer);
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            },
+                        });
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'already exist in cart',
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'oops',
+                            text: 'something went wrong'
+                        })
+
+                    }
+                }
+            })
+        }
+    </script>
     <!--================= Cart Section End Here =================-->
-<%- include('partials/user-footer.ejs')  %> 
-<body>
-    <!--================= Preloader Section Start Here =================-->
-    <!--================= Jquery latest version =================-->
-    <script src="/js/vendors/jquery-3.6.0.min.js"></script>
-    <!--================= Bootstrap latest version =================-->
-    <script src="/js/vendors/bootstrap.min.js"></script>
-    <!--================= Wow.js =================-->
-    <script src="/js/vendors/wow.min.js"></script>
-    <!--================= Swiper Slider =================-->
-    <script src="/js/vendors/swiper-bundle.min.js"></script>
-    <!--================= Nice Select =================-->
-    <script src="/js/vendors/jquery.nice-select.js"></script>
-    <!--================= Zoom Plugin =================-->
-    <script src="/js/vendors/zoom.js"></script>
-    <!--================= metisMenu Plugin =================-->
-    <script src="/js/vendors/metisMenu.min.js"></script>
-    <!--================= Main Menu Plugin =================-->
-    <script src="/js/vendors/rtsmenu.js"></script>
-    <!--================= Magnefic Popup Plugin =================-->
-    <script src="/js/vendors/isotope.pkgd.min.js"></script>
-    <!--================= Magnefic Popup Plugin =================-->
-    <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
-    <!--================= Main Script =================-->
-    <script src="/js/main.js"></script>
-</body>
+    <%- include('partials/user-footer.ejs') %>
+
+        <body>
+            <!--================= Preloader Section Start Here =================-->
+            <!--================= Jquery latest version =================-->
+            <script src="/js/vendors/jquery-3.6.0.min.js"></script>
+            <!--================= Bootstrap latest version =================-->
+            <script src="/js/vendors/bootstrap.min.js"></script>
+            <!--================= Wow.js =================-->
+            <script src="/js/vendors/wow.min.js"></script>
+            <!--================= Swiper Slider =================-->
+            <script src="/js/vendors/swiper-bundle.min.js"></script>
+            <!--================= Nice Select =================-->
+            <script src="/js/vendors/jquery.nice-select.js"></script>
+            <!--================= Zoom Plugin =================-->
+            <script src="/js/vendors/zoom.js"></script>
+            <!--================= metisMenu Plugin =================-->
+            <script src="/js/vendors/metisMenu.min.js"></script>
+            <!--================= Main Menu Plugin =================-->
+            <script src="/js/vendors/rtsmenu.js"></script>
+            <!--================= Magnefic Popup Plugin =================-->
+            <script src="/js/vendors/isotope.pkgd.min.js"></script>
+            <!--================= Magnefic Popup Plugin =================-->
+            <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
+            <!--================= Main Script =================-->
+            <script src="/js/main.js"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        </body>

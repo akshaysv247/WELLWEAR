@@ -7,8 +7,11 @@ const Uses=require('../middleware/userSession')
 const reqms=require('../controller/requirements')
 const wishlistControl = require('../controller/wishlistControl');
 const cartControl=require('../controller/cartController')
-const CheckOut=require('../controller/checkoutController')
-
+const CheckOut=require('../controller/checkoutController');
+const checkoutController = require('../controller/checkoutController');
+const orders=require('../controller/order-controller')
+const category=require('../controller/catControl')
+const Coupons=require('../controller/coupon')
 
 
 router.get('/',Ucontroller.homePage)
@@ -17,19 +20,36 @@ router.get('/home',Ucontroller.Home)
 router.get("/contact",reqms.requirements, Ucontroller.contactPage);
 router.get("/shop",Ucontroller.shopPage);
 
-router.get('/add-wishlist',Uses.userSession,wishlistControl.addToWishlist)
+router.patch('/add-wishlist',Uses.userSession,wishlistControl.addToWishlist)
 router.get("/wishlist",Uses.userSession,reqms.requirements,wishlistControl.getWishlist);
-router.get('/delete-wish',Uses.userSession,reqms.requirements,wishlistControl.deleteWish)
+router.patch("/delete-wish", Uses.userSession, wishlistControl.deleteWish);
 
-router.get('/add-cart',cartControl.addItemtoCart)
+
+router.patch('/add-cart',cartControl.addItemtoCart)
 router.get('/cart',Uses.userSession,cartControl.getCart)
-// router.get('/delete-cart',Uses.userSession,cartControl.deleteFromCart)
+router.patch('/remove-cart',Uses.userSession,cartControl.removeCart)
+router.patch('/increase-quantity',Uses.userSession,cartControl.incrementQuantity)
+router.patch("/reduce-quantity",Uses.userSession,cartControl.decrementQuantity);
 
 router.get("/product-details",reqms.requirements,Ucontroller.productDeatails);
+router.get('/get-cat-item',category.getProductByCat)
 
 router.get('/myAc',reqms.requirements,Ucontroller.getMyAcc)
+router.get('/add-address',Uses.userSession,Ucontroller.Address)
+router.post("/adding-address",Uses.userSession,Ucontroller.addAddress);
+router.patch("/delete-address",Uses.userSession,Ucontroller.deleteAddress);
+router.get('/edit-address',Uses.userSession,Ucontroller.getAddressDetails)
+router.get('/show-coupons',Uses.userSession,Coupons.showCoupons)
 
-router.get("/checkout",CheckOut.toCheckout);
+
+//payments and checkouy
+router.get("/checkout",Uses.userSession,CheckOut.toCheckout);
+router.post('/checking-out',Uses.userSession,CheckOut.checkingOut)
+router.get('/order-details',Uses.userSession,orders.getOrderDetails)
+router.post("/verify-payment",Uses.userSession,CheckOut.verifyPayment);
+router.get('/thankyou',Uses.userSession,CheckOut.thankYou)
+router.get('/cancel-order',Uses.userSession,orders.cancelOrder)
+router.post('/check-coupon',Uses.userSession,Coupons.checkCoupon)
 
 
 

@@ -32,7 +32,7 @@ module.exports = {
     if (!req.files.thumbnail) return next();
 
     // Get the thumbnail
-    req.body.thumbnail = `product-${Date.now()}-thumb.jpeg`;
+    req.body.thumbnail = `category-${Date.now()}-thumb.jpeg`;
 
     await sharp(req.files.thumbnail[0].buffer)
       .resize(450, 450)

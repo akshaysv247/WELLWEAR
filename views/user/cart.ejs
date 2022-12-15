@@ -41,15 +41,21 @@
     <div class="rts-cart-section">
         <div class="container">
             <h4 class="section-title">Product List</h4>
-            <div class="row justify-content-between">
-                <div class="col-xl-7">
+            <div class="row ">
+                <div class="col-xl-12">
                     <div class="cart-table-area">
                         <table class="table table-bordered table-hover">
                             <thead class="thead-dark">
+                                <th></th>
+                                <th>Product</th>
+                                <th>price</th>
+                                <th></th>
+                                <th>Total</th>
+                                <th></th>
                             </thead>
                             <tbody>
                                 <% for(let i=0;i<cartData.length;i++){ %>
-                                    <tr>
+                                    <tr id="productDiv<%= cartData[i]._id %>">
                                         <td>
                                             <div class="product-thumb"><img
                                                     src="/productImages/<%= cartData[i].product.thumbnail %>"
@@ -64,105 +70,57 @@
                                             </div>
                                         </td>
                                         <td><span class="product-price">
-                                                <%= cartData[i].product.price %>
+                                                <%= cartData[i].product.price %>.$
                                             </span></td>
                                         <td>
                                             <div class="cart-edit">
                                                 <div class="quantity-edit">
-                                                    <button class="button"><i class="fal fa-minus minus"></i></button>
+                                                    <button id="decm-btn" onclick="reduceQuant('<%= cartData[i]._id%>')" class="button"><i class="fal fa-minus minus"></i></button>
                                                     <input type="text" class="input"
                                                         value="<%= cartData[i].quantity %> " />
-                                                    <button class="button plus">+<i
+                                                    <button id="inc-btn" onclick="plusQuant('<%= cartData[i]._id%>')" class="button plus">+<i
                                                             class="fal fa-plus plus"></i></button>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="last-td"><a data-id="<%= index %>"
-                                                href="/delete-cart?id=<%= cartData[i]._id %>"
-                                                >
-                                                <button onclick="removeFromCart(this)"
-                                                    class="remove-btn">Remove</button></a></td>
+                                        <td><span class="product-price" id="tot-price">
+                                                <%= cartData[i].total %>.$
+                                            </span></td>
+                                        <td>
+                                            <div class="item-wrapper d-flex mr--5 align-items-center">
+                                                <a onclick="removeFromCart('<%= cartData[i]._id %>')" class="delete-cart btn btn-outline-danger">Remove</a>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <% } %>
                             </tbody>
                         </table>
-                        <script>
-                            async function removeFromCart(el) {
-                                const index = $(el).data('id')
-                                const res = await $.ajax({
-                                    url: "/delete-cart",
-                                    method: "PATCH",
-                                    data: {
-                                        index,
-                                    },
-                                });
-                                if (res.status === "success") {
-
-                                    $(el).parent("td").parent("tr").hide();
-                                    $("#subtotal-price").text(`₹${res.total}`);
-                                    $("#total-price").text(`₹${res.total}`);
-                                } else {
-                                    Swal.fire({
-                                        icon: "error",
-                                        title: "Oops...",
-                                        text: "Something went wrong!",
-                                    });
-                                }
-                            }
-                        </script>
-                        <% if(cart){ %>
-                            <div class="coupon-apply">
-                                <span class="coupon-text">Coupon Code:</span>
-                                <div class="apply-input">
-                                    <input type="text" placeholder="Apply coupon here">
-                                    <button type="submit" class="apply-btn">Apply </i></button>
-                                </div>
-                            </div>
-                            <% }else{ %>
+                        
+                        <% if(!cart){ %>
+                            
                                 <div class="coupon-apply">
-                                    <P>Add some Products</P>
+                                    <P>Cart is empty! Please Add some Products</P>
                                 </div>
                                 <% } %>
                     </div>
                 </div>
                 <% if(cart){ %>
-                    <div class="col-xl-4">
+                    <div class="col-xl-12">
                         <div class="checkout-box">
                             <div class="checkout-box-inner">
-                                <% for(let i=0;i<cartData.length;i++){%>
-                                    <div class="subtotal-area">
+                                    <div class="subtotal-area" >
                                         <span class="title">Subtotal</span>
-                                        <span class="subtotal-price">
-                                            <%= cartData[i].total %>
+                                        <span class="subtotal-price" id="sub-total">
+                                            <%= cart.subTotal %>.$
                                         </span>
                                     </div>
-                                    <div class="shipping-check">
-                                        <span class="title">Shipping</span>
-                                        <div class="check-options">
-                                            <form>
-                                                <div class="form-group">
-                                                    <input type="checkbox" id="fltrt">
-                                                    <label class="check-title" for="fltrt">Flat rate</label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="checkbox" id="frsh">
-                                                    <label class="check-title" for="frsh">Free shipping</label>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="shipping-location">
-                                        <span class="shipping-to">Shipping to <span>NY.</span></span>
-                                        <span class="change-address"><i class="fal fa-map-marker-alt mr--5"></i>Change
-                                            address</span>
-                                    </div>
-                                    <div class="total-area">
+                                    
+                                    <!-- <div class="total-area">
                                         <span class="title">Total</span>
-                                        <span class="total-price">
-                                            <%= cart.subTotal%>
+                                        <span class="total-price" id="whole-total">
+                                            <%= cart.subTotal%>.$
                                         </span>
-                                    </div>
-                                    <% } %>
+                                    </div> -->
                             </div>
                             <a href="/checkout" class="procced-btn">Procced To Checkout</a>
 
@@ -177,7 +135,93 @@
             </div>
         </div>
     </div>
+        <script>
+            async function removeFromCart(productId){
+                console.log(productId)
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Cancelled!',
+                            'Your item has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+                $.ajax({
+                    url:`/remove-cart?id=${productId}`,
+                    method:'PATCH',
+                    data:{
+                        productId,
+                    },
+                    success: (response) => {
+                        if (response.status&&response.data) {
+                            console.log(response.data)
+                            $('#productDiv' + productId).remove();
+                            $('#sub-total').html(response.data+'$')
+                            $('#whole-total').html(response.data+'$')
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                psoition: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                            });
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Item removed From Cart'
+                            })
+                        } else {
+                            swal.fire("something went wrong!..")
 
+                        }
+                    }
+                })
+            }
+            async function reduceQuant(productId){
+                $.ajax({
+                    url:`/reduce-quantity?id=${productId}`,
+                    method:'PATCH',
+                    data:{productId},
+                    success:(response)=>{
+                     if(response.status==true&&response.data){
+                        $('#decm-btn').html(response.data.cartItems.quantity)
+                        $('#sub-total').html(response.data.subTotal+'$')
+                        $('#tot-price').html(response.data.cartItems.total+'$')
+                     }else{
+                        Swal.fire('Something went wrong')
+                     }   
+                    }
+                })
+            }
+            async function plusQuant(productId){
+                $.ajax({
+                    url:`/increase-quantity?id=${productId}`,
+                    method:'PATCH',
+                    data:{productId},
+                    success:(response)=>{
+                        if(response.status==true&&response.data){
+                            $('#inc-btn').html(response.data.cartItems.quantity)
+                            $('#sub-total').html(response.data.subTotal+'$')
+                            $('#tot-price').html(response.data.cartItems.total+'$')
+                        }else{
+                            Swal.fire('Something went wrong')
+                        }
+                    }
+                })
+            }
+        </script>
     <!--================= Cart Section End Here =================-->
 
     <%- include('partials/user-footer.ejs') %>

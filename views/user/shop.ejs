@@ -72,15 +72,15 @@
                                     </a>
                                     <div class="bottom-content">
                                         <a href="/product-details/<%= element._id %>" class="product-name"><%= element.title %> </a>
-                                        <div class="action-wrap">
-                                            <span class="product-price"><%= element.price %> </span>
-                                            <a href="/add-cart?id=<%= element._id %>" class="addto-cart"><i class="fal fa-shopping-cart"></i>
+                                        <div class="action-wrap" id="to-cart-btn<%= element._id %>">
+                                            <span class="product-price"><%= element.price %>.$ </span>
+                                            <a onclick="addToCart('<%= element._id %>')" class="addto-cart"><i class="fal fa-shopping-cart"></i>
                                                 Add To
                                                 Cart</a>
                                         </div>
                                     </div>
-                                    <div class="product-actions">
-                                        <a href="/add-wishlist?id=<%= element._id %>" class="product-action"><i class="fal fa-heart"></i></a>
+                                    <div class="product-actions" id="to-wishlist-btn<%= element._id %>">
+                                        <a onclick="addToWishlist('<%= element._id %>')" class="product-action"><i class="fal fa-heart"></i></a>
                                         <button class="product-action product-details-popup-btn"><i
                                                 class="fal fa-eye"></i></button>
                                     </div>
@@ -111,7 +111,7 @@
                                     <div class="category-item-inner">
                                         <div class="category-title-area">
                                             <span class="point"></span>
-                                            <span class="category-title"><%= item.catName %> </span>
+                                            <span class="category-title"><a href="/get-cat-item?id=<% item._id %>"><%= item.catName %> </a></span>
                                         </div>
                                         
                                         <div class="down-icon"><i class="far fa-angle-down"></i></div>
@@ -166,100 +166,120 @@
         </div>
     </div>
     <!--================= Shop Section Section End Here =================-->
+        <script>
+            async function addToWishlist(productId) {
+                console.log(productId)
+                $.ajax({
+                    url: `/add-wishlist?id=${productId}`,
+                    method: 'PATCH',
+                    data: {
+                        productId
+                    },
+                    success: (response) => {
+                        if (response.status === 'success') {
+                            $('#to-wishlist' + productId).children('i')
+                                .addClass('far fa-heart')
+                                .removeClass('far fa-heart_alt')
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                psoition: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                            });
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'added to wishlist'
+                            })
+                        }
+                        else if (response.status === 'removed') {
+                            $('#to-wishlist-btn' + productId)
+                                .children('i')
+                                .addClass("rt-heart")
+                                .removeClass('rt-heart_alt')
+                            const Toast = Swal.fire({
+                                toast: true,
+                                psoition: top - end,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                                },
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Removed from wishlist'
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'added',
+                                text: 'Item is added'
+                            })
+                        }
+                    }
+                })
+            }
+            async function addToCart(productId) {
+                console.log(productId)
+                $.ajax({
+                    url: `/add-cart?id=${productId}`,
+                    method: 'PATCH',
+                    data: {
+                        productId,
+                    },
+                    success: (response) => {
+                        if (response.status == true) {
+                            $('#to-cart-btn' + productId).css({ Backgroundcolor: '19dc26' })
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListner('mouseenter', Swal.stopTimer);
+                                    toast.addEventListner('mouseleave', Swal.resumeTimer);
+                                },
+                            });
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'added to cart',
+                            });
+                            console.log(response)
+                        } else if (response.status == "already") {
+                            $('#to-cart-btn' + productId).css({ color: '19dc26' })
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListner('mouseenter', Swal.stopTimer);
+                                    toast.addEventListner('mouseleave', Swal.resumeTimer);
+                                }
+                            });
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'already exist in cart',
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops',
+                                text: 'something went wrong'
+                            })
 
-
-    <!--================= Product-details Section Start Here =================-->
-    <div class="product-details-popup-wrapper">
-        <div class="rts-product-details-section rts-product-details-section2 product-details-popup-section">
-            <div class="product-details-popup">
-                <button class="product-details-close-btn"><i class="fal fa-times"></i></button>
-                <% Products.forEach(element=>{  %> 
-                <div class="details-product-area">
-                    <div class="product-thumb-area">
-                        <div class="cursor"></div>
-                        <div class="thumb-wrapper one filterd-items figure">
-                            <div class="product-thumb zoom" onmousemove="zoom(event)"
-                                style="background-image: url(assets/images/products/product-details.jpg)"><img
-                                    src="/productImages/<%= element.image[0] %> " alt="product-thumb">
-                            </div>
-                        </div>
-                        <div class="thumb-wrapper two filterd-items hide">
-                            <div class="product-thumb zoom" onmousemove="zoom(event)"
-                                style="background-image: url(assets/images/products/product-filt2.jpg)"><img
-                                    src="/productImages/<%= element.image[1] %>" alt="product-thumb">
-                            </div>
-                        </div>
-                        <div class="thumb-wrapper three filterd-items hide">
-                            <div class="product-thumb zoom" onmousemove="zoom(event)"
-                                style="background-image: url(assets/images/products/product-filt3.jpg)"><img
-                                    src="/productImages/<%= element.image[2] %>" alt="product-thumb">
-                            </div>
-                        </div>
-                        <div class="product-thumb-filter-group">
-                            <div class="thumb-filter filter-btn active" data-show=".one"><img
-                                    src="/productImages/<%= element.image[3] %>" alt="product-thumb-filter"></div>
-                            <div class="thumb-filter filter-btn" data-show=".two"><img
-                                    src="/productImages/<%= element.image[4] %>" alt="product-thumb-filter"></div>
-                            <div class="thumb-filter filter-btn" data-show=".three"><img
-                                    src="/productImages/<%= element.image[5] %>" alt="product-thumb-filter"></div>
-                        </div>
-                    </div>
-                    <div class="contents">
-                        <div class="product-status">
-                            <span class="product-catagory"><%= element.category.catName %> </span>
-                            <div class="rating-stars-group">
-                                <div class="rating-star"><i class="fas fa-star"></i></div>
-                                <div class="rating-star"><i class="fas fa-star"></i></div>
-                                <div class="rating-star"><i class="fas fa-star-half-alt"></i></div>
-                                <span>10 Reviews</span>
-                            </div>
-                        </div>
-                        <h2 class="product-title"><%= element.title %> <span class="stock">In Stock</span></h2>
-                        <span class="product-price"><span class="old-price">$19.35</span><%= element.price %> </span>
-                        <p>
-                            WEARWELL has brought to you the <%= element.title %> . It is a
-                            completely modern design and you feel comfortable to put on this <%= element.title %> .
-                            Buy it at the best price.
-                        </p>
-                        <div class="product-bottom-action">
-                            <div class="cart-edit">
-                                <div class="quantity-edit action-item">
-                                    <button class="button minus"><i class="fal fa-minus minus"></i></button>
-                                    <input type="text" class="input" value="01" />
-                                    <button class="button plus">+<i class="fal fa-plus plus"></i></button>
-                                </div>
-                            </div>
-                            <a href="/add-cart?id=<%= element._id %>" class="addto-cart-btn action-item"><i class="rt-basket-shopping"></i>
-                                Add To
-                                Cart</a>
-                                <a href="/wishlist?id=<%= element._id %>" class="wishlist-btn action-item"><i class="rt-heart"></i></a>
-                            </div>
-                            <div class="product-uniques">
-                                <!-- <span class="sku product-unipue"><span>SKU: </span> BO1D0MX8SJ</span> -->
-                                <!-- <span class="catagorys product-unipue"><span>Categories: </span> T-Shirts, Tops, Mens</span> -->
-                                <span class="tags product-unipue"><span>Tags: </span> <%= element.group_tag  %> </span>
-                            </div>
-                            <div class="share-social">
-                                <span>Share:</span>
-                                <a class="platform" href="http://facebook.com" target="_blank"><i
-                                    class="fab fa-facebook-f"></i></a>
-                                    <a class="platform" href="http://twitter.com" target="_blank"><i
-                                        class="fab fa-twitter"></i></a>
-                            <a class="platform" href="http://behance.com" target="_blank"><i
-                                    class="fab fa-behance"></i></a>
-                            <a class="platform" href="http://youtube.com" target="_blank"><i
-                                    class="fab fa-youtube"></i></a>
-                            <a class="platform" href="http://linkedin.com" target="_blank"><i
-                                    class="fab fa-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <% }) %> 
-            </div>
-        </div>
-    </div>
-    <!--================= Product-details Section End Here =================-->
-
+                        }
+                    }
+                })
+            }
+        </script>
 
     <!--================= Footer Start Here =================-->
 <%- include('partials/user-footer.ejs') %> 
@@ -286,6 +306,8 @@
     <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
     <!--================= Main Script =================-->
     <script src="/js/main.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     </body>
     
     </html>
