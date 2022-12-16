@@ -45,7 +45,10 @@ module.exports = {
   },
 
   checkingOut: async (req, res) => {
-    console.log(req.body);
+    console.log("fdlkkajfd",req.body);
+    if(!req.body.payment){
+      return res.json({coupon : true})
+    }
     let addId=mongoose.Types.ObjectId(req.body.group1)
     // console.log(addId)
     let placeOrder=req.body.payment==='COD'?'placed':'pending';
@@ -83,20 +86,7 @@ module.exports = {
         products:cart,
         total:cart.subTotal,
         status:placeOrder,
-        deliveryAddress:userAddress
-          // {
-          //   firstName:userAddress.firstName,
-          //   lastName:userAddress.lastName,
-          //   place:userAddress.place,
-          //   pinCode:userAddress.pinCode,
-          //   houseNo:userAddress.houseNo,
-          //   landMark:userAddress.landMark,
-          //   country:userAddress.country,
-          //   state:userAddress.state,
-          //   Email:userAddress.Email,
-          //   phone:userAddress.phone,
-          // }
-        ,
+        deliveryAddress:userAddress,
         purchaseDate:today,
         expectedDeliveryDate:tenDays,
 

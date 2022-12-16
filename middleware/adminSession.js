@@ -1,9 +1,9 @@
 const adminSession=(req,res,next)=>{
-    // if(req.session.adminLoggedIn){
+    if(req.session.adminLoggedIn){
         next();
-//     }
-//     else{
-//         res.redirect('/admin/admin-login')
-//     }
+    }
+    else{
+        res.redirect('/admin/admin-login')
+    }
 }
 module.exports={adminSession}

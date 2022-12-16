@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const Coupon = require("../model/couponModel");
 const User=require('../model/UserSchema')
-const Category=require('../model/categorySchema')
+const Category=require('../model/categorySchema');
+const Cart = require("../model/cartModel");
+const Order = require("../model/orderModel");
 
 exports.showCoupons = async (req, res) => {
     let coupon=await Coupon.find({});
@@ -63,13 +65,22 @@ exports.checkCoupon=async(req,res)=>{
   console.log(couponCode)
   let coupon=await Coupon.findOne({code:couponCode});
   console.log(coupon)
+  let cartData=await Cart.findOne({user:mongoose.Types.ObjectId(req.session.user._id)})
+  console.log(cartData)
   if(coupon){
-    res.json({coupon})
-  }
-  else if(!coupon){
-    res.json({status:true,message:'Please enter the coupon code before applying'})
-  }
-  else{
+    let discount=cartData.subTotal/100*coupon.percentage
+    let newSubtotal=cartData.subTotal-discount
+    console.log('discount:',discount)
+    console.log('newSubtotal:',newSubtotal)
+    await Cart.updateOne(
+    {
+      user: mongoose.Types.ObjectId(req.session.user._id),
+    },
+    {
+      $set:{subTotal:newSubtotal}
+    });
+    res.json({status : true,data:discount,newSubtotal})
+  }else{
     res.json({ message: "you entered invalid coupon code..!" });
   }
 }

@@ -46,5 +46,10 @@ exports.subCategory = (req, res) => {
   res.render("admin/sub-category");
 };
 
-
+exports.addNewBanner=(req,res)=>{
+  res.render('admin/addBanner')
+}
+exports.viewBanners=async(req,res)=>{
+  res.render("admin/viewBanners")
+}
 

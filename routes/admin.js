@@ -102,6 +102,9 @@ router.get('/view-orders',ses.adminSession,Order.getOrders)
 router.patch("/cancel-Order",ses.adminSession,Order.cancelOrderAsAdmin);
 router.get("/order-details", ses.adminSession, Order.viewOrderDeatails);
 
+router.get("/new-banner",ses.adminSession,Acontroller.addNewBanner);
+router.get('/view-banners',ses.adminSession,Acontroller.viewBanners)
+
 
 
 //logout

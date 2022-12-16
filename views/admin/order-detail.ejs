@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="Ekka - Admin Dashboard HTML Template.">
 
-	<title>Ekka - Admin Dashboard HTML Template.</title>
+	<title>WEARWELL - Admin Dashboard HTML Template.</title>
 
 	<!-- GOOGLE FONTS -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,10 +64,9 @@
 											<address class="info-grid">
 												<div class="info-title"><strong>Customer:</strong></div><br>
 												<div class="info-content">
-													Twitter, Inc.<br>
-													795 Folsom Ave, Suite 600<br>
-													San Francisco, CA 94107<br>
-													<abbr title="Phone">P:</abbr> (123) 456-7890
+													<%= user.username %> <br>
+									
+													<abbr title="Phone">Phone:</abbr>+91<%= user.phone %> 
 												</div>
 											</address>
 										</div>
@@ -75,10 +74,10 @@
 											<address class="info-grid">
 												<div class="info-title"><strong>Shipped To:</strong></div><br>
 												<div class="info-content">
-													Elaine Hernandez<br>
-													P. Sherman 42,<br>
-													Wallaby Way, Sidney<br>
-													<abbr title="Phone">P:</abbr> (123) 345-6789
+													<%- aDDress.place %> <br>
+													<%= aDDress.houseNo %>,<%= aDDress.pinCode %> <br>
+													<%= aDDress.state %> , <%= aDDress.country %> <br>
+													<abbr title="Phone">P:</abbr><%= aDDress.phone %> 
 												</div>
 											</address>
 										</div>
@@ -86,8 +85,11 @@
 											<address class="info-grid">
 												<div class="info-title"><strong>Payment Method:</strong></div><br>
 												<div class="info-content">
-													Visa ending **** 1234<br>
-													h.elaine@gmail.com<br>
+													<% if(orders.payment=='COD'){ %> 
+													Cash On Delivery<br>
+													<% }else{ %> 
+													Online Payment<br>
+													<% } %> 
 												</div>
 											</address>
 										</div>
@@ -95,8 +97,7 @@
 											<address class="info-grid">
 												<div class="info-title"><strong>Order Date:</strong></div><br>
 												<div class="info-content">
-													4:34PM,<br>
-													Wed, Aug 13, 2020
+													<%= orders.purchaseDate.toLocaleDateString() %> 
 												</div>
 											</address>
 										</div>
@@ -117,54 +118,17 @@
 														</tr>
 													</thead>
 													<tbody>
+														<% products.forEach((element,index) => { %>
 														<tr>
 															<td>1</td>
 															<td><img class="product-img"
-																	src="/assets/img/products/p1.jpg" alt="" /></td>
-															<td><strong>Baby Pink Shoes</strong><br>a vary smooth and
-																comfert Shoes ever for baby.</td>
-															<td class="text-center">15</td>
-															<td class="text-center">$75</td>
-															<td class="text-right">$1,125.00</td>
+																	src="/productImages/<%= element.thumbnail %>" style="width:50px;height:auto;" alt="" /></td>
+															<td><strong><%= element.title %> </strong> </td>
+															<td class="text-center"><%= element.price %> </td>
+															<td class="text-center"><%= totalQuant[index].productsTotal%></td>
+															<td class="text-right"><%= orders[index].subTotal%> </td>
 														</tr>
-														<tr>
-															<td>2</td>
-															<td><img class="product-img"
-																	src="/assets/img/products/p2.jpg" alt="" /></td>
-															<td><strong>Tee-Shirt For Men</strong><br>Classie and full
-																slive tee-shirt for boy or man.</td>
-															<td class="text-center">15</td>
-															<td class="text-center">$75</td>
-															<td class="text-right">$1,125.00</td>
-														</tr>
-														<tr class="line">
-															<td>3</td>
-															<td><img class="product-img"
-																	src="/assets/img/products/p4.jpg" alt="" /></td>
-															<td><strong>Round Cap</strong><br>Comfertable round cut cap
-																for both.</td>
-															<td class="text-center">2</td>
-															<td class="text-center">$75</td>
-															<td class="text-right">$150.00</td>
-														</tr>
-														<tr>
-															<td colspan="4"></td>
-															<td class="text-right"><strong>Taxes</strong></td>
-															<td class="text-right"><strong>N/A</strong></td>
-														</tr>
-														<tr>
-															<td colspan="4">
-															</td>
-															<td class="text-right"><strong>Total</strong></td>
-															<td class="text-right"><strong>$2,400.00</strong></td>
-														</tr>
-
-														<tr>
-															<td colspan="4">
-															</td>
-															<td class="text-right"><strong>Payment Status</strong></td>
-															<td class="text-right"><strong>PAID</strong></td>
-														</tr>
+														<%= }); %> 
 													</tbody>
 												</table>
 											</div>

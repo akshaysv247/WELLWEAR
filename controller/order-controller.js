@@ -4,18 +4,45 @@ const Cart = require('../model/cartModel');
 const { default: mongoose } = require('mongoose');
 const User = require('../model/UserSchema');
 const Category = require('../model/categorySchema');
+const { findById, findOne } = require('../model/orderModel');
 
 exports.getOrderDetails=async(req,res)=>{
     let orderId=req.query.id
     let user=await User.findById(req.session.user)
     let Categories=await Category.find({})
     let orders=await Order.findById(mongoose.Types.ObjectId(orderId))
-
-   
+         let quantityTotal = await Order.aggregate([
+           {
+             $project: {
+               products: { $arrayElemAt: ["$products.cartItems", 0] },
+               _id: 0,
+             },
+           },
+           { $project: { productsTotal: { $sum: "$products.quantity" } } },
+         ]);
+   let products = await Order.aggregate([
+     { $match: { _id: mongoose.Types.ObjectId(orderId) } },
+     {
+       $project: {
+         items: { $arrayElemAt: ["$products.cartItems", 0] },
+         _id: 0,
+       },
+     },
+     {$unwind:{path:'$items'}},
+     {$lookup:{
+       from:'products',
+       localField:'items.product',
+       foreignField:'_id',
+       as:'product'
+     }},
+   ]);
+   console.log(products)
     res.render("user/order-details", {
       user,
       Categories,
       orders,
+      quantityTotal,
+      products,
     });
 }
 
@@ -66,6 +93,64 @@ exports.cancelOrderAsAdmin=async(req,res)=>{
 exports.viewOrderDeatails=async(req,res)=>{
   let orderId=req.query.id;
   let orders=await Order.findOne({_id:mongoose.Types.ObjectId(orderId)});
-  console.log(orders)
-  res.render('admin/order-detail',{orders})
+  // console.log(orders)
+  let user=await User.findById(mongoose.Types.ObjectId(orders.userId))
+  // console.log(user)
+  let aDDress = await Order.aggregate([
+    {
+      $match: { _id: mongoose.Types.ObjectId(orderId) },
+    },
+    {
+    $project: {
+           addresses: { $arrayElemAt: ["$deliveryAddress.address", 0] },
+           _id: 0,
+         },
+    },
+    // {
+    //   $project: {
+    //     'deliveryAddress.address': 1,
+    //     _id: 0,
+    //   },
+    // },
+    {
+      $unwind:{path:"$addresses"}
+    }
+  ]);
+  // console.log(aDDress)
+
+     let products = await Order.aggregate([
+       { $match: { _id: mongoose.Types.ObjectId(orderId) } },
+       {
+         $project: {
+           items: { $arrayElemAt: ["$products.cartItems", 0] },
+           _id: 0,
+         },
+       },
+       { $unwind: { path: "$items" } },
+       {
+         $lookup: {
+           from: "products",
+           localField: "items.product",
+           foreignField: "_id",
+           as: "product",
+         },
+       },
+     ]);
+
+     let totalQuant = await Order.aggregate([
+       {
+         $project: {
+           products: { $arrayElemAt: ["$products.cartItems", 0] },
+           _id: 0,
+         },
+       },
+       { $project: { productsTotal: { $sum: "$products.quantity" } } },
+     ]);
+  res.render("admin/order-detail", {
+    orders,
+    user,
+    aDDress,
+    products,
+    totalQuant,
+  });
 }

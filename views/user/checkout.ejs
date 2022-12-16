@@ -41,7 +41,7 @@
 
     <div class="rts-checkout-section">
         <div class="container">
-            <form action="/checking-out" method="post" id="checkout-form">
+            <form action="/checking-out" method="post" id="checkout-form" onsubmit="return false;">
                 <div class="row justify-content-between">
                     <div class="col-xl-8">
                         <div class="coupon-area">
@@ -119,10 +119,14 @@
                                         <span class="text-sm-right">Shipping charge</span>
                                         <span>Free</span>
                                     </div>
+                                    <div class="action-middle">
+                                        <span class="text-sm-right">Coupon Discount</span>
+                                        <span id="discount<%= cart._id %>">0</span>
+                                    </div>
 
                                     <div class="action-bottom">
                                         <span class="total">Total</span>
-                                        <span class="total-price">
+                                        <span class="total-price" id="newsubT<%= cart._id %>">
                                             <%= cart.subTotal %>.$
                                         </span>
                                     </div>
@@ -131,7 +135,7 @@
                             <!-- <span class="coupon-text">Coupon Code:</span> -->
                             <div class="apply-input d-flex justify-content-center">
                                 <input type="text" placeholder="Apply coupon here" name="couponCode" id="coupon-code">
-                                <button onclick="applyCoupon()" class="btn btn-danger" style="width:75px;">Apply </button>
+                                <button onclick="applyCoupon('<%= cart._id %>')" class="btn btn-danger" style="width:75px;">Apply </button>
                             </div>
                         </div>
                         <div class="action-item m-0">
@@ -156,6 +160,7 @@
         
         $('#checkout-form').submit((element) => {
             element.preventDefault();
+            
             $.ajax({
                 url: '/checking-out',
                 method: 'POST',
@@ -163,12 +168,10 @@
                 success: (response) => {
                     // let ID=response._id,
                     console.log(response)
-                    if (response.data) {
+                   if (response.data) {
                         document.location.href = '/thankyou'
-
                     }
                     else if (response.status) {
-
                         console.log(response.generateRazorPay)
                         OnlinePayment(response.generateRazorPay)
                     }
@@ -233,19 +236,19 @@
             })
         }
 
-         function applyCoupon() {
+         function applyCoupon(id) {
+                
                 let coupon = $('#coupon-code').val()
                 $.ajax({
                     url:'/check-coupon',
                     method:'post',
                     data:{coupon},
                     success:async(response)=>{
-                        if(response.coupon){
-                            console.log(response.coupon)
-                        }else if(response.status&&response.message){
-                            console.log(response.message)
-                            Swal.fire(response.message)
-                        }else if(!response.status&&response.message){
+                        if(response.status&&response.data){
+                            console.log(response)
+                            $('#discount'+id).html(response.data.discount)
+                            $('#newsubT'+id).html(response.data.newSubtotal)
+                        }else{
                             Swal.fire(response.message)
                         }
                     }
