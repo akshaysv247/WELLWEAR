@@ -10,8 +10,9 @@ module.exports = {
       let productId = req.query.id;
       let userId = req.session.user._id;
       
-      const cart = await Cart.findOne({ user: userId });
+      let cart = await Cart.findOne({ user: userId });
       const product = await Product.findById(productId);
+     
       //if there is no cart for User
       if (!cart) {
         const newCart = await Cart.create({
@@ -30,32 +31,36 @@ module.exports = {
           return res.json({ status: true });
         }
         //have cart and product is already inside it
-      } else if (
-        cart &&
-        cart.cartItems.some((obj) => obj._id.toString() == productId)
-      ) {
-        const index = cart.cartItems.findIndex(
-          (obj) => obj._id.toString() == productId
-        );
-        cart.cartItems[index].quantity += 1;
-        cart.subTotal += parseInt(product.price);
-        // cart.cartItems[index].total += parseInt(product.price * quantity);
-        await cart.save();
-        return res.json({
-          status: "already",
-        });
-        // User have cart but current product not in cart
-      } else {
+      } else  {
+        let newCart = await Cart.findOne({ user: userId ,'cartItems.product' : mongoose.Types.ObjectId(productId)});
+
+        // If the product is already exist in the cart
+        if(newCart){
+          await Cart.updateOne(
+            {
+              user: userId,
+              "cartItems.product": mongoose.Types.ObjectId(productId),
+            },
+            {
+              $inc: {
+                "cartItems.$.quantity": 1,
+                "cartItems.$.total": product.price,
+              },
+            }
+          );
+          cart.subTotal += parseInt(product.price);
+          await cart.save()
+          return res.json({ status: "already" });       
+        }  
+        //  If the product is not exist in the cart 
+
         cart.cartItems.push({
           product: productId,
           quantity: 1,
           total: product.price,
         });
         cart.subTotal += parseInt(product.price);
-        // cart.cartItems[index].total += parseInt(product.price);
-        await cart.save().then((response) => {
-          // console.log(response)
-        });
+        await cart.save()
         return res.json({ status: true });
       }
     } catch (error) {
@@ -87,18 +92,14 @@ module.exports = {
   removeCart: async (req, res) => {
     const cart = await Cart.findOne({ user: req.session.user._id });
     let proId = mongoose.Types.ObjectId(req.query.id);
-    console.log(proId)
     const index = cart.cartItems.findIndex(
       (obj) => obj._id.toString()== proId
       );
-      console.log(index)
       const productId=cart.cartItems[index].product
       const product=await Product.findOne({_id:productId})
-      console.log(product)
       price=product.price
     
     let finalAmount = cart.subTotal - cart.cartItems[index].total;
-    console.log(finalAmount);
     await Cart.updateOne(
       { user: mongoose.Types.ObjectId(req.session.user._id) },
       {
@@ -106,23 +107,20 @@ module.exports = {
         $set: { subTotal: finalAmount },
       }
     ).then(async(response) => {
-      console.log(response);
       const cart=await Cart.findOne({user:req.session.user._id})
       return res.json({ status: true, data: cart.subTotal,cart });
     });
   },
   incrementQuantity:async(req,res)=>{
+    
     let proId=mongoose.Types.ObjectId(req.query.id);
-    console.log(proId)
+    
     const cart=await Cart.findOne({user:req.session.user._id})
     const index=cart.cartItems.findIndex((obj)=> obj._id.toString()==proId)
-    console.log(index)
     let productId=cart.cartItems[index].product
     const product=await Product.findOne({_id:productId})
-    console.log(product)
 
     let price=product.price
-    console.log(price) 
     await Cart.updateOne(
       { "cartItems._id": proId },
       {
@@ -130,28 +128,23 @@ module.exports = {
       },
       
     ).then(async(response) => {
-    const updatedCart=await Cart.findOne({"cartItems.$._id":proId})
-      console.log(updatedCart)
+     
+    // const updatedCart=await Cart.findOne({"cartItems.$._id":proId})
       return res.json({
         status: true,
-        data: updatedCart,
       });
     });
   },
   decrementQuantity:async(req,res)=>{
     let proId = mongoose.Types.ObjectId(req.query.id);
-    console.log(proId);
     const cart = await Cart.findOne({ user: req.session.user._id });
     const index = cart.cartItems.findIndex(
       (obj) => obj._id.toString() == proId
     );
-    console.log(index);
     let productId = cart.cartItems[index].product;
     const product = await Product.findOne({ _id: productId });
-    console.log(product);
 
     let price = product.price;
-    console.log(price); 
     await Cart.updateOne(
       { "cartItems._id": proId },
       {
@@ -159,10 +152,9 @@ module.exports = {
       },
       
     ).then(async(response) => {
-    const updatedCart = await Cart.findOne({ "cartItems.$._id": proId });
+    // const updatedCart = await Cart.findOne({ "cartItems.$._id": proId });
       res.json({
         status: true,
-        data: updatedCart,
       });
     });
   }

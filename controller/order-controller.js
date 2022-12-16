@@ -7,26 +7,15 @@ const Category = require('../model/categorySchema');
 
 exports.getOrderDetails=async(req,res)=>{
     let orderId=req.query.id
-    // console.log(orderId)
     let user=await User.findById(req.session.user)
     let Categories=await Category.find({})
     let orders=await Order.findById(mongoose.Types.ObjectId(orderId))
 
-    let quantityTotal = await Order.aggregate([
-      {
-        $project: {
-          products: { $arrayElemAt: ["$products.cartItems", 0] },
-          _id: 0,
-        },
-      },
-      { $project: { productsTotal: { $sum: "$products.quantity" } } },
-    ]);
-    
+   
     res.render("user/order-details", {
       user,
       Categories,
       orders,
-      quantityTotal,
     });
 }
 

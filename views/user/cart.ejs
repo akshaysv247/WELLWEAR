@@ -76,14 +76,15 @@
                                             <div class="cart-edit">
                                                 <div class="quantity-edit">
                                                     <button id="decm-btn" onclick="reduceQuant('<%= cartData[i]._id%>')" class="button"><i class="fal fa-minus minus"></i></button>
-                                                    <input type="text" class="input"
+                                                    <input type="text" class="input" id="quantity<%= cartData[i]._id%>"
                                                         value="<%= cartData[i].quantity %> " />
+                                                    
                                                     <button id="inc-btn" onclick="plusQuant('<%= cartData[i]._id%>')" class="button plus">+<i
                                                             class="fal fa-plus plus"></i></button>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><span class="product-price" id="tot-price">
+                                        <td><span class="product-price" id="tot-price<%= cartData[i]._id %>">
                                                 <%= cartData[i].total %>.$
                                             </span></td>
                                         <td>
@@ -148,6 +149,39 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/remove-cart?id=${productId}`,
+                            method: 'PATCH',
+                            data: {
+                                productId,
+                            },
+                            success: (response) => {
+                                if (response.status) {
+                                    console.log(response.data)
+                                    $('#productDiv' + productId).remove();
+                                    $('#sub-total').html(response.data + '$')
+                                    $('#whole-total').html(response.data + '$')
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        },
+                                    });
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Item removed From Cart'
+                                    })
+                                } else {
+                                    swal.fire("something went wrong!..")
+
+                                }
+                            }
+                        })
                         Swal.fire(
                             'Cancelled!',
                             'Your item has been deleted.',
@@ -155,50 +189,26 @@
                         )
                     }
                 })
-                $.ajax({
-                    url:`/remove-cart?id=${productId}`,
-                    method:'PATCH',
-                    data:{
-                        productId,
-                    },
-                    success: (response) => {
-                        if (response.status&&response.data) {
-                            console.log(response.data)
-                            $('#productDiv' + productId).remove();
-                            $('#sub-total').html(response.data+'$')
-                            $('#whole-total').html(response.data+'$')
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                psoition: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1500,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer);
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                                },
-                            });
-                            Toast.fire({
-                                icon: 'success',
-                                title: 'Item removed From Cart'
-                            })
-                        } else {
-                            swal.fire("something went wrong!..")
-
-                        }
-                    }
-                })
+                
             }
             async function reduceQuant(productId){
+
+                let total = parseInt($('#tot-price' + productId).html())
+                let quantity = parseInt($('#quantity' + productId).val())
+                let originalValue = total / quantity
+                let subTotal = parseInt($('#sub-total').html())
+                
                 $.ajax({
                     url:`/reduce-quantity?id=${productId}`,
                     method:'PATCH',
                     data:{productId},
                     success:(response)=>{
-                     if(response.status==true&&response.data){
-                        $('#decm-btn').html(response.data.cartItems.quantity)
-                        $('#sub-total').html(response.data.subTotal+'$')
-                        $('#tot-price').html(response.data.cartItems.total+'$')
+                     if(response.status){
+                        // $('#decm-btn').html(response.data.cartItems.quantity)
+                        $('#tot-price' + productId).html(total - originalValue + '.$')
+                        $('#sub-total').html(subTotal - originalValue + '$')
+
+
                      }else{
                         Swal.fire('Something went wrong')
                      }   
@@ -206,15 +216,23 @@
                 })
             }
             async function plusQuant(productId){
+                
+                let total=parseInt($('#tot-price' + productId).html())
+                let quantity = parseInt($('#quantity' + productId).val())
+                let originalValue = total/quantity
+
+                let subTotal=parseInt($('#sub-total').html())
+                
                 $.ajax({
                     url:`/increase-quantity?id=${productId}`,
                     method:'PATCH',
                     data:{productId},
                     success:(response)=>{
-                        if(response.status==true&&response.data){
-                            $('#inc-btn').html(response.data.cartItems.quantity)
-                            $('#sub-total').html(response.data.subTotal+'$')
-                            $('#tot-price').html(response.data.cartItems.total+'$')
+                       
+                        if(response.status){
+                            $('#tot-price'+productId).html(total+originalValue+'.$')
+                            $('#sub-total').html(subTotal + originalValue + '$')
+
                         }else{
                             Swal.fire('Something went wrong')
                         }
@@ -248,6 +266,6 @@
         <script src="/js/vendors/jquery.magnific-popup.min.js"></script>
         <!--================= Main Script =================-->
         <script src="/js/main.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         </body>

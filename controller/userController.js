@@ -58,8 +58,17 @@ exports.getMyAcc = async (req, res) => {
     const user = await User.findById(req.session.user);
     const userAddress = user.address;
     const orders=await Order.find({});
+     let quantityTotal = await Order.aggregate([
+       {
+         $project: {
+           products: { $arrayElemAt: ["$products.cartItems", 0] },
+           _id: 0,
+         },
+       },
+       { $project: { productsTotal: { $sum: "$products.quantity" } } },
+     ]);
     // console.log(orders)
-    res.render("user/account", { user, userAddress,orders });
+    res.render("user/account", { user, userAddress,orders, quantityTotal});
   } else {
     res.redirect("/");
   }
