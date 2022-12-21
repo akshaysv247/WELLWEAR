@@ -68,8 +68,11 @@ exports.getOrders=async(req,res)=>{
     {$project: {productsTotal: { $sum: "$products.quantity"},}
    }
   ]);
-  
+  let userDet=await Order.find({}).populate('userId').lean()
 
+  // console.log(userDet[0].userId.username)
+  
+   res.locals.userDet = userDet;
   res.render("admin/new-order", { allOrders, quantityItem });  
 }
 exports.cancelOrderAsAdmin=async(req,res)=>{
@@ -106,12 +109,6 @@ exports.viewOrderDeatails=async(req,res)=>{
            _id: 0,
          },
     },
-    // {
-    //   $project: {
-    //     'deliveryAddress.address': 1,
-    //     _id: 0,
-    //   },
-    // },
     {
       $unwind:{path:"$addresses"}
     }
@@ -132,7 +129,7 @@ exports.viewOrderDeatails=async(req,res)=>{
            from: "products",
            localField: "items.product",
            foreignField: "_id",
-           as: "product",
+           as: "productDet",
          },
        },
      ]);
@@ -146,11 +143,28 @@ exports.viewOrderDeatails=async(req,res)=>{
        },
        { $project: { productsTotal: { $sum: "$products.quantity" } } },
      ]);
+
+     res.locals.orders=orders;
+     res.locals.user=user;
+     res.locals.totalQuant=totalQuant;
+     res.locals.aDDress=aDDress;
   res.render("admin/order-detail", {
-    orders,
-    user,
-    aDDress,
     products,
-    totalQuant,
   });
+}
+exports.updateStatus=async(req,res)=>{
+  console.log(req.body)
+  let newStat=req.body.status;
+  let orderId=req.query.id
+  console.log(orderId,newStat)
+  let updatedStatus=await Order.updateOne(
+  {
+    _id:mongoose.Types.ObjectId(orderId)
+  },
+  {
+    $set:{status:newStat}
+  }
+  )
+  res.json({ status: true, data: newStat });
+
 }

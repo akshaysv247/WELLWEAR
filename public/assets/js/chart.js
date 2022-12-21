@@ -198,6 +198,19 @@ $(document).ready(function() {
     });
   }
 
+       let revDate = [];
+       let revAmount = [];
+       let nOrder = [];
+       revenueDate.split(",").forEach((e) => {
+         revDate.push(e.slice(5));
+       });
+       console.log(revDate);
+       revenueAmount.split(",").forEach((e) => {
+         revAmount.push(parseInt(e));
+       });
+       countOrder.split(",").forEach((e) => {
+         nOrder.push(parseInt(e));
+       });
   /*======== 3. LINE CHART ========*/
   var ctx = document.getElementById("linechart");
   if (ctx !== null) {
@@ -207,39 +220,13 @@ $(document).ready(function() {
 
       // The data for our dataset
       data: {
-        labels: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
-        ],
+        labels:revDate,
         datasets: [
           {
             label: "",
             backgroundColor: "transparent",
             borderColor: "rgb(82, 136, 255)",
-            data: [
-              100,
-              11000,
-              10000,
-              14000,
-              11000,
-              17000,
-              14500,
-              18000,
-              5000,
-              23000,
-              14000,
-              19000
-            ],
+            data:revAmount ,
             lineTension: 0.3,
             pointRadius: 5,
             pointBackgroundColor: "rgba(255,255,255,1)",
@@ -848,39 +835,57 @@ $(document).ready(function() {
     });
   }
 
+var countArr = orderStatus;
+countArr = countArr.split(",").map((el) => {
+  return Number(el);
+});
+
   /*======== 11. DOUGHNUT CHART ========*/
   var doughnut = document.getElementById("doChart");
   if (doughnut !== null) {
     var myDoughnutChart = new Chart(doughnut, {
       type: "doughnut",
       data: {
-        labels: ["completed", "unpaid", "pending", "canceled", "returned", "Broken"],
+        labels: ["completed", "placed", "On Delivery", "canceled", "pending"],
         datasets: [
           {
-            label: ["completed", "unpaid", "pending", "canceled", "returned", "Broken"],
-            data: [4100, 2500, 1800, 2300, 400, 150],
-            backgroundColor: ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5"],
-            borderWidth: 1
+            label: [
+              "completed",
+              "placed",
+              "On Delivery",
+              "canceled",
+              "pending",
+            ],
+            data: countArr,
+            backgroundColor: [
+              "#88aaf3",
+              "#50d7ab",
+              "#9586cd",
+              "#ed9090",
+              "#f3d676",
+              "#a4d9e5",
+            ],
+            borderWidth: 1,
             // borderColor: ['#88aaf3','#29cc97','#8061ef','#fec402']
             // hoverBorderColor: ['#88aaf3', '#29cc97', '#8061ef', '#fec402']
-          }
-        ]
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          display: false
+          display: false,
         },
         cutoutPercentage: 75,
         tooltips: {
           callbacks: {
-            title: function(tooltipItem, data) {
+            title: function (tooltipItem, data) {
               return "Order : " + data["labels"][tooltipItem[0]["index"]];
             },
-            label: function(tooltipItem, data) {
+            label: function (tooltipItem, data) {
               return data["datasets"][0]["data"][tooltipItem["index"]];
-            }
+            },
           },
           titleFontColor: "#888",
           bodyFontColor: "#555",
@@ -889,9 +894,9 @@ $(document).ready(function() {
           backgroundColor: "rgba(256,256,256,0.95)",
           displayColors: true,
           borderColor: "rgba(220, 220, 220, 0.9)",
-          borderWidth: 2
-        }
-      }
+          borderWidth: 2,
+        },
+      },
     });
   }
 
@@ -1266,6 +1271,8 @@ $(document).ready(function() {
     var ctx = document.getElementById("acquisition").getContext("2d");
     var lineAcq = new Chart(ctx, configAcq);
     document.getElementById("acqLegend").innerHTML = lineAcq.generateLegend();
+
+    
 
     var items = document.querySelectorAll(
       "#user-acquisition .nav-tabs .nav-item"

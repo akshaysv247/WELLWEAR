@@ -18,7 +18,6 @@ exports.addCoupon = (req, res) => {
 };
 exports.addNewCoupon = async (req, res) => {
   let formData = req.body;
-  // console.log(formData);
   let today = Date.now();
   let message;
   if (
@@ -51,34 +50,29 @@ exports.addNewCoupon = async (req, res) => {
 };
 exports.viewCoupon=async(req,res)=>{
    let coupons = await Coupon.find({}).sort({ _id: -1 });
-  //  console.log(coupons)
    res.render('admin/couponList',{coupons})
 }
 exports.deleteCoupon=async(req,res)=>{
     let couponId=req.query.id;
-    // console.log(couponId)
     await Coupon.deleteOne({_id:mongoose.Types.ObjectId(couponId)})
     res.redirect('/admin/coupon-list')
 }
 exports.checkCoupon=async(req,res)=>{
   let couponCode=req.body.coupon;
-  console.log(couponCode)
   let coupon=await Coupon.findOne({code:couponCode});
-  console.log(coupon)
   let cartData=await Cart.findOne({user:mongoose.Types.ObjectId(req.session.user._id)})
-  console.log(cartData)
   if(coupon){
     let discount=cartData.subTotal/100*coupon.percentage
     let newSubtotal=cartData.subTotal-discount
-    console.log('discount:',discount)
-    console.log('newSubtotal:',newSubtotal)
     await Cart.updateOne(
-    {
-      user: mongoose.Types.ObjectId(req.session.user._id),
-    },
-    {
-      $set:{subTotal:newSubtotal}
-    });
+      {
+        user: mongoose.Types.ObjectId(req.session.user._id),
+      },
+      {
+        $set: { total: newSubtotal, couponDiscount: discount },
+      }
+    )
+    
     res.json({status : true,data:discount,newSubtotal})
   }else{
     res.json({ message: "you entered invalid coupon code..!" });

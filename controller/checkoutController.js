@@ -18,18 +18,14 @@ module.exports = {
     try {
       if (req.session.user) {
         let userId = req.session.user._id;
-        // console.log(userId);
         let cart = await Cart.findOne({
           user: userId,
         }).populate("cartItems.product");
-        // console.log(cart);
 
         let cartData = cart.cartItems;
-        // console.log(cartData);
         const Categories = await Category.find();
         const user = await User.findById(req.session.user);
         const userAddress = user.address;
-        // console.log(userAddress)
         res.render("user/checkout", {
           cart,
           cartData,
@@ -45,13 +41,11 @@ module.exports = {
   },
 
   checkingOut: async (req, res) => {
-    console.log("fdlkkajfd",req.body);
     if(!req.body.payment){
       return res.json({coupon : true})
     }
     let addId=mongoose.Types.ObjectId(req.body.group1)
-    // console.log(addId)
-    let placeOrder=req.body.payment==='COD'?'placed':'pending';
+    let placeOrder=req.body.payment==='COD'?'Placed':'Pending';
 
     let userId = req.session.user._id;
 
@@ -60,7 +54,6 @@ module.exports = {
     let cart = await Cart.findOne({
       user: userId,
     }).populate("cartItems.product");
-    // console.log(cart)
     
     let userAddress = await User.aggregate([
       { $match: { _id: mongoose.Types.ObjectId(user) } },
@@ -74,31 +67,25 @@ module.exports = {
       },
       { $match: { 'address._id': addId } },
     ]);
-    console.log(userAddress)
     let tenDays= new Date(new Date().getTime()+(10*24*60*60*1000));
     let today=Date.now();
-    // console.log(today)
-    // console.log(tenDays)
 
       const newOrder=await Order.create({
         userId:mongoose.Types.ObjectId(user),
         paymentMethod:req.body.payment,
         products:cart,
-        total:cart.subTotal,
+        total:cart.total,
         status:placeOrder,
         deliveryAddress:userAddress,
         purchaseDate:today,
         expectedDeliveryDate:tenDays,
 
       }).then(async(response)=>{
-        console.log(response)
       let orderId= response._id;
       let totalAmount=response.total
-      // console.log(orderId,totalAmount)
       if(req.body.payment=='COD'){
 
        await Cart.deleteOne({user:mongoose.Types.ObjectId(user)})
-      // res.render("user/thankYou", { user, Categories,cart });
       res.json({status:true,
       data:user,Categories,cart})
 
@@ -113,14 +100,12 @@ module.exports = {
     key2: "value2"
   }
 })
-      //  console.log(generateRazorPay)
       res.json({status:true,
         generateRazorPay})
       }
       })
     } ,
     verifyPayment:async(req,res)=>{
-      console.log(req.body)
       const paymentId=req.body.payment['razorpay_payment_id'];
       const orderId=req.body.payment['razorpay_order_id'];
       const signature=req.body.payment['razorpay_signature'];
@@ -135,10 +120,9 @@ module.exports = {
           _id:mongoose.Types.ObjectId(orederedId)
         },
         {
-          $set:{status:'placed'}
+          $set:{status:'Placed'}
         }
         ).then(async(response)=>{
-          console.log("hjkhkjhkjhjkhkjhkjhkjhkjhk",response)
           await Cart.deleteOne({ user: mongoose.Types.ObjectId(req.session.user._id) });
              let user = await User.findById(req.session.user._id);
            let Categories = await Category.find();

@@ -79,7 +79,7 @@
                             <div class="activity-item">
                                 <div class="icon"><i class="fas fa-box-check"></i></div>
                                 <span class="title">Active Orders</span>
-                                <span class="value">33</span>
+                                <span class="value"><%= allOrders %> </span>
                             </div>
                             <!-- <div class="activity-item">
                             <div class="icon"><i class="fas fa-download"></i></div>
@@ -90,10 +90,10 @@
                                 <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
                                 <span class="title">Address</span>
                                 <span class="value">
-                                    <%= user.address.houseNo %> ,<%= user.address.place %> ,<%= user.address.state %>
+                                    <%= userAddress.houseNo %> ,<%= userAddress.place %> ,<%= userAddress.state %>
                                 </span>
                                 <span class="value">
-                                    <%= user.address.country %>
+                                    <%= userAddress.country %>
                                 </span>
                             </div>
                             <!-- <div class="activity-item">

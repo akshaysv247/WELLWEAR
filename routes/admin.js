@@ -7,7 +7,9 @@ const ses = require("../middleware/adminSession");
 const upload = require("../middleware/multer");
 const catUpload = require("../middleware/catMulter");
 const couponControl=require('../controller/coupon')
-const Order=require('../controller/order-controller')
+const Order=require('../controller/order-controller');
+const Banner=require('../controller/bannerControl')
+const banMulter=require('../middleware/bannerMulter')
 
 
 router.get("/", Acontroller.loginPage);
@@ -64,8 +66,8 @@ router.get("/admin-log", ses.adminSession, Acontroller.adminLog);
 router.post(
   "/add-category",
   ses.adminSession,
-  catUpload.uploadProductPic,
-  catUpload.resizeProductPic,
+  catUpload.uploadCategoryPic,
+  catUpload.resizeCategoryPic,
   productController.addCategory
 );
 router.get("/add-category", ses.adminSession, productController.addCategory);
@@ -82,14 +84,14 @@ router.get(
 router.get(
   "/edit-category/:id",
   ses.adminSession,
-  catUpload.resizeProductPic,catUpload.uploadProductPic,
+  catUpload.resizeCategoryPic,catUpload.uploadCategoryPic,
   productController.getCategoryDetails
 );
 router.post(
   "/edit-category/:id",
   ses.adminSession,
-  catUpload.resizeProductPic,
-  catUpload.uploadProductPic,
+  catUpload.resizeCategoryPic,
+  catUpload.uploadCategoryPic,
   productController.editCategory
 );
 
@@ -102,8 +104,18 @@ router.get('/view-orders',ses.adminSession,Order.getOrders)
 router.patch("/cancel-Order",ses.adminSession,Order.cancelOrderAsAdmin);
 router.get("/order-details", ses.adminSession, Order.viewOrderDeatails);
 
+router.post('/update-status',ses.adminSession,Order.updateStatus)
+
 router.get("/new-banner",ses.adminSession,Acontroller.addNewBanner);
-router.get('/view-banners',ses.adminSession,Acontroller.viewBanners)
+router.get('/view-banners',ses.adminSession,Banner.getBanners);
+router.post(
+  "/add-banner",
+  ses.adminSession,
+  banMulter.uploadBannerPic,
+  banMulter.resizeBannerPic,
+  Banner.addBanners
+);
+router.patch('/delete-banner',ses.adminSession,Banner.deleteBanners)
 
 
 

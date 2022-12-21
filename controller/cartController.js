@@ -21,12 +21,12 @@ module.exports = {
             {
               product: productId,
               quantity: 1,
-              total:product.price,
+              total: product.price,
             },
           ],
           subTotal: product.price,
+          total: product.price,
         });
-        // console.log(newCart)
         if (newCart) {
           return res.json({ status: true });
         }
@@ -49,6 +49,7 @@ module.exports = {
             }
           );
           cart.subTotal += parseInt(product.price);
+          cart.total += parseInt(product.price);
           await cart.save()
           return res.json({ status: "already" });       
         }  
@@ -60,6 +61,7 @@ module.exports = {
           total: product.price,
         });
         cart.subTotal += parseInt(product.price);
+        cart.total += parseInt(product.price);
         await cart.save()
         return res.json({ status: true });
       }
@@ -83,7 +85,6 @@ module.exports = {
     }
     let cartData = [];
     if (cart) {
-      // console.log(cart.cartItems);
       cartData = cart.cartItems;
     }
     const Categories = await Category.find({});

@@ -1,3 +1,5 @@
+<% let userDet = locals.userDet %> 
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -5,9 +7,9 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Ekka - Admin Dashboard HTML Template.">
+	<meta name="description" content="WEARWELL - Admin Dashboard HTML Template.">
 
-	<title>Ekka - Admin Dashboard HTML Template.</title>
+	<title>WEARWELL - Admin Dashboard HTML Template.</title>
 
 	<!-- GOOGLE FONTS -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,16 +74,40 @@
 											</thead>
 					
 											<tbody>
-												<% allOrders.forEach((element,index) => { %> 
+												<% for(let i=0;i<allOrders.length;i++) { %> 
 												<tr>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td><%= quantityItem[index].productsTotal %> </td>
-													<td><%= element.total %>$</td>
-													<td></td>
-													<td><span class="mb-2 mr-2 badge badge-secondary" id="status-area<%= element._id %>"><%= element.status %> </span></td>
-													<td><%= element.purchaseDate.toLocaleDateString() %> </td>
+													<td>##</td>
+													<td><%= userDet[i].userId.username %></td>
+													<td><%= userDet[i].userId.email %> </td>
+													<td><%= quantityItem[i].productsTotal %> </td>
+													<td><%= allOrders[i].total %>$</td>
+													<td><%= allOrders[i].paymentMethod %></td> 
+													<% if(allOrders[i].status=='Placed'){ %> 
+														<td><span class="mb-2 mr-2 badge badge-warning" id="status-area<%= allOrders[i]._id %>"><%= allOrders[i].status %> </span></td>
+														<% }else if(allOrders[i].status=='Cancelled'){ %> 
+													<td><span class="mb-2 mr-2 badge badge-danger" id="status-area<%= allOrders[i]._id %>"><%= allOrders[i].status %> </span></td>
+													<% }else if(allOrders[i].status=='Confirmed Order'){ %> 
+													<td><span class="mb-2 mr-2 badge badge-secondary" id="status-area<%= allOrders[i]._id %>">
+															<%= allOrders[i].status %>
+														</span></td>
+													<% }else if(allOrders[i].status=='Processing Order'){ %> 
+														<td><span class="mb-2 mr-2 badge badge-primary" id="status-area<%= allOrders[i]._id %>">
+																<%= allOrders[i].status %>
+															</span></td>
+															<% }else if(allOrders[i].status=='On Delivery'){ %> 
+																<td><span class="mb-2 mr-2 badge badge-info" id="status-area<%= allOrders[i]._id %>">
+																		<%= allOrders[i].status %>
+																	</span></td>
+																	<% }else if(allOrders[i].status=='Delivered'){ %>
+																		<td><span class="mb-2 mr-2 badge badge-success" id="status-area<%= allOrders[i]._id %>">
+																				<%= allOrders[i].status %>
+																			</span></td>
+																			<% }else{ %>
+																				<td><span class="mb-2 mr-2 badge badge-secondary" id="status-area<%= allOrders[i]._id %>">
+																						<%= allOrders[i].status %>
+																					</span></td>
+																					<% } %> 
+													<td><%= allOrders[i].purchaseDate.toLocaleDateString() %> </td>
 													<td>
 														<div class="btn-group mb-1">
 															<button type="button" class="btn btn-outline-success">Info</button>
@@ -93,14 +119,14 @@
 															</button>
 					
 															<div class="dropdown-menu">
-																<a class="dropdown-item" href="/admin/order-details?id=<%= element._id %>">Detail</a>
+																<a class="dropdown-item" href="/admin/order-details?id=<%= allOrders[i]._id %>">Detail</a>
 																<!-- <a class="dropdown-item" href="#">Track</a> -->
-																<a class="dropdown-item" onclick="cancelOrder('<%= element._id%>')">Cancel</a>
+																<a class="dropdown-item" onclick="cancelOrder('<%= allOrders[i]._id %>')">Cancel</a>
 															</div>
 														</div>
 													</td>
 												</tr>
-												<% }); %> 
+												<% } %> 
 											</tbody>
 										</table>
 									</div>
@@ -127,6 +153,7 @@
 
 	<script>
 		async function cancelOrder(id){
+			
 			Swal.fire({
 				title: 'Are you sure?',
 				text: "You won't be able to revert this!",
@@ -137,6 +164,18 @@
 				confirmButtonText: 'Yes, cancel it!'
 			}).then((result) => {
 				if (result.isConfirmed) {
+					$.ajax({
+						url: `/admin/cancel-Order?id=${id}`,
+						method: 'patch',
+						data: { id },
+						success: (response) => {
+							console.log(response)
+							if (response.status == true && response.data) {
+								let status = response.data.status
+								$('#status-area' + id).html(status)
+							}
+						}
+					})
 					Swal.fire(
 						'Cancelled!',
 						'Your Order has been cancelled.',
@@ -144,18 +183,8 @@
 					)
 				}
 			})
-
-			$.ajax({
-				url:`/admin/cancel-Order?id=${id}`,
-				method:'patch',
-				data:{id},
-				success:(response)=>{
-					if(response.status==true&&response.data){
-						let status=reponse.data.status
-						$('#status-area'+id).html(status)
-					}
-				}
-			})
+			
+			
 		}
 	</script>
 

@@ -1,6 +1,6 @@
 const multer = require("multer");
 const sharp = require("sharp");
-const Product = require("../model/productSchema");
+const Category = require("../model/categorySchema");
 const path = require("path");
 
 //////////////////////////////////////////////////////////////////////
@@ -20,15 +20,17 @@ const upload = multer({
 });
 
 module.exports = {
-  uploadProductPic: upload.fields([
+  uploadCategoryPic: upload.fields([
     {
       name: "thumbnail",
       maxCount: 1,
     },
   ]),
 
-  resizeProductPic: async (req, res, next) => {
+  resizeCategoryPic: async (req, res, next) => {
+    console.log('ivde eththi')
     //Validations
+    console.log(req.body)
     if (!req.files.thumbnail) return next();
 
     // Get the thumbnail

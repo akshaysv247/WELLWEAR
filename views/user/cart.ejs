@@ -75,12 +75,15 @@
                                         <td>
                                             <div class="cart-edit">
                                                 <div class="quantity-edit">
+                                                    <% if(!cart.couponDiscount){ %>
                                                     <button id="decm-btn" onclick="reduceQuant('<%= cartData[i]._id%>')" class="button"><i class="fal fa-minus minus"></i></button>
+                                                    <% } %>
                                                     <input type="text" class="input" id="quantity<%= cartData[i]._id%>"
                                                         value="<%= cartData[i].quantity %> " />
-                                                    
+                                                    <% if(!cart.couponDiscount){ %>
                                                     <button id="inc-btn" onclick="plusQuant('<%= cartData[i]._id%>')" class="button plus">+<i
                                                             class="fal fa-plus plus"></i></button>
+                                                            <% } %>
                                                 </div>
                                             </div>
                                         </td>
@@ -88,9 +91,11 @@
                                                 <%= cartData[i].total %>.$
                                             </span></td>
                                         <td>
-                                            <div class="item-wrapper d-flex mr--5 align-items-center">
-                                                <a onclick="removeFromCart('<%= cartData[i]._id %>')" class="delete-cart btn btn-outline-danger">Remove</a>
-                                            </div>
+                                            <% if(!cart.couponDiscount){ %> 
+                                                <div class="item-wrapper d-flex mr--5 align-items-center">
+                                                    <a onclick="removeFromCart('<%= cartData[i]._id %>')" class="delete-cart btn btn-outline-danger">Remove</a>
+                                                </div>
+                                            <% } %> 
                                         </td>
                                     </tr>
                                     <% } %>

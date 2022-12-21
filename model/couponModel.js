@@ -7,30 +7,31 @@ const couponSchema = new mongoose.Schema(
     },
     code: {
       type: String,
-      rquired:true
+      rquired: true,
     },
     description: {
       type: String,
-      required:true
+      required: true,
     },
     percentage: {
       type: Number,
       required: true,
     },
-    beginingDate:{
-      type:Date
+    beginingDate: {
+      type: Date,
     },
-    expireDate:{
-      type:Date
+    expireDate: {
+      type: Date,
     },
-    minLimit:{
-      type:Number,
-      required:true
+    minLimit: {
+      type: Number,
+      required: true,
     },
-    maxLimit:{
-      type:Number,
-      required:true
+    maxLimit: {
+      type: Number,
+      required: true,
     },
+    
   },
   { timestamps: true }
 );

@@ -10,7 +10,6 @@ const otpAuth = require("../utils/otpAuthentication");
 let phone
 let id
 exports.signupUser = async (req, res) => {
-  console.log(req.body);
   let message;
   try {
     if (
@@ -50,7 +49,6 @@ exports.signupUser = async (req, res) => {
       password: hashPassword,
       verified : false
     }).then((res)=>{
-      console.log(res);
       id=res._id
     })
     phone=req.body.phone
@@ -159,7 +157,6 @@ exports.activeUsers = async (req, res) => {
 };
 exports.blockedUsers = async (req, res) => {
   id = req.params.id;
-  console.log(id);
   await User.updateOne({ _id: id }, { $set: { isBlocked: true } });
   res.redirect("/admin/user-list");
 };

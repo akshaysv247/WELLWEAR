@@ -121,23 +121,26 @@
                                     </div>
                                     <div class="action-middle">
                                         <span class="text-sm-right">Coupon Discount</span>
-                                        <span id="discount<%= cart._id %>">0</span>
+                                        <span id="discount<%= cart._id %>"><%= cart.couponDiscount %>.$</span>
                                     </div>
 
                                     <div class="action-bottom">
                                         <span class="total">Total</span>
                                         <span class="total-price" id="newsubT<%= cart._id %>">
-                                            <%= cart.subTotal %>.$
+                                            <%= cart.total %>.$
                                         </span>
                                     </div>
                         </div>
-                        <div class="coupon-apply ">
+                        <% if(cart.couponDiscount){ %> 
+                        <% }else{ %> 
+                        <div class="coupon-apply " id="couponId">
                             <!-- <span class="coupon-text">Coupon Code:</span> -->
                             <div class="apply-input d-flex justify-content-center">
                                 <input type="text" placeholder="Apply coupon here" name="couponCode" id="coupon-code">
                                 <button onclick="applyCoupon('<%= cart._id %>')" class="btn btn-danger" style="width:75px;">Apply </button>
                             </div>
                         </div>
+                        <% } %> 
                         <div class="action-item m-0">
                             <div class="payment-options checkout-options">
                                 <span class="subtotal">Payment Methods</span><br>
@@ -237,7 +240,6 @@
         }
 
          function applyCoupon(id) {
-                
                 let coupon = $('#coupon-code').val()
                 $.ajax({
                     url:'/check-coupon',
@@ -246,8 +248,9 @@
                     success:async(response)=>{
                         if(response.status&&response.data){
                             console.log(response)
-                            $('#discount'+id).html(response.data.discount)
-                            $('#newsubT'+id).html(response.data.newSubtotal)
+                            $('#discount'+id).html(response.data + '.$')
+                            $('#newsubT'+id).html(response.newSubtotal + '.$')
+                            $('#couponId').remove()
                         }else{
                             Swal.fire(response.message)
                         }

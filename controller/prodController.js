@@ -57,10 +57,11 @@ module.exports = {
   productDetails: async (req, res) => {
     id = req.params.id;
     const products = await Product.findOne({ _id: id });
+    let category=await Product.findOne({_id:id}).populate('category')
+    console.log(category)
     res.render("admin/product-details", { products });
   },
   addCategory: async (req, res) => {
-    console.log(req.body);
     let catMessage;
     if (!req.body.catName || !req.body.thumbnail) {
       catMessage = "Please fill all the fields";
@@ -69,7 +70,6 @@ module.exports = {
     }
     Category.create(req.body)
       .then((result) => {
-        console.log('kjvdfngfojgnjfgn;kjg;kdafgjk;dg;kabgkfbg')
         res.redirect("/admin/list-category");
       })
       .catch((err) => {

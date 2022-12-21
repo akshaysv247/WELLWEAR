@@ -68,12 +68,13 @@
                     <div class="thumb-filter filter-btn" data-show=".two"><img
                             src="/productImages/<%= Products.image[3] %> " alt="product-thumb-filter"></div>
                     <div class="thumb-filter filter-btn" data-show=".three"><img
-                            src="/productImages/<%= Products.image[4] %> " alt="product-thumb-filter"></div>
+                            src="/productImages/<%= Products.image[3] %> " alt="product-thumb-filter"></div>
                 </div>
             </div>
             <div class="contents">
                 <div class="product-status">
-                    <span class="product-catagory"><%= Products.category %> </span>
+                    <%console.log(Products)%>
+                    <span class="product-catagory"><%= cats.category.catName %> </span>
                     <div class="rating-stars-group">
                         <div class="rating-star"><i class="fas fa-star"></i></div>
                         <div class="rating-star"><i class="fas fa-star"></i></div>
@@ -82,28 +83,28 @@
                     </div>
                 </div>
                 <h2 class="product-title"><%= Products.title %> <span class="stock">In Stock</span></h2>
-                <span class="product-price"><span class="old-price">$9.35</span><%= Products.price %>.$ </span>
+                <span class="product-price"><span class="old-price"></span><%= Products.price %>.$ </span>
                 <p>
                     WEARWELL has brought to you the <%= Products.title %> . It is a
                     completely modern design and you feel comfortable to put on this <%= Products.title %> .
                     Buy it at the best price.
                 </p>
                 <div class="product-bottom-action">
-                    <div class="cart-edit">
+                    <!-- <div class="cart-edit">
                         <div class="quantity-edit action-item">
                             <button class="button"><i class="fal fa-minus minus"></i></button>
                             <input type="text" class="input" value="01" />
                             <button class="button plus">+<i class="fal fa-plus plus"></i></button>
                         </div>
-                    </div>
+                    </div> -->
                     <a onclick="addToCart('<%= Products._id %>')" class="addto-cart-btn action-item" id="to-cart-btn"><i class="rt-basket-shopping"></i> Add To
                         Cart</a>
                     <a onclick="addToWishlist('<%= Products._id %>')" class="wishlist-btn action-item" id="to-wishlist"><i class="rt-heart"></i></a>
                 </div>
                 <div class="product-uniques">
                     <!-- <span class="sku product-unipue"><span>SKU: </span> BO1D0MX8SJ</span> -->
-                    <span class="catagorys product-unipue"><span>Categories: </span> T-Shirts, Tops, Mens</span>
-                    <span class="tags product-unipue"><span>Tags: </span> fashion, t-shirts, Men</span>
+                    <span class="catagorys product-unipue"><span>Categories: </span><%= cats.category.catName %></span>
+                    <span class="tags product-unipue"><span>Tags: </span><%= Products.group_tag %> </span>
                 </div>
                 <div class="share-social">
                     <span>Share:</span>
@@ -249,11 +250,11 @@
                 </div>
             </div>
             <div class="row">
-                <% for(let i=0;i<product;i++){ %> 
                 <div class="col-xl-3 col-md-4 col-sm-6 col-12">
+                    <% for(let i=0;i<product;i++){ %> 
                     <div class="product-item element-item1">
                         <a href="/product-details" class="product-image image-hover-variations">
-                            <div class="image-vari1 image-vari"><img src="/productImages/<%= product[i].image[1] %> "
+                            <div class="image-vari1 image-vari"><img src="/productImages/<%= product[i].thumbnail %> "
                                     alt="product-image">
                             </div>
                             <div class="image-vari2 image-vari"><img src="/productImage/<%= product[i].image[0] %> "
@@ -268,7 +269,7 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                             </div>
-                            <a href="/product-details?id=<%= product[i]._id %>" class="product-name">Girl's Sport Bra</a>
+                            <a href="/product-details?id=<%= product[i]._id %>" class="product-name"><%= product[i].title  %> </a>
                             <div class="action-wrap">
                                 <span class="price"><%= product[i].price %> </span>
                             </div>

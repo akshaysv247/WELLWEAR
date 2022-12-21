@@ -7,16 +7,19 @@ const Product = require("../model/productSchema");
 const Uses = require("../middleware/userSession");
 const User = require("../model/UserSchema");
 const Order = require("../model/orderModel");
+const Banner=require('../model/bannerSchema')
 
 exports.homePage = async (req, res) => {
   const Categories = await Category.find({});
   const Products = await Product.find({});
   const cart = await Cart.find({});
+  const banner=await Banner.find({});
   res.render("user/index", {
     title: "WEAR WELL",
     Categories,
     Products,
     cart,
+    banner,
     user: req.session.user,
   });
 };
@@ -47,17 +50,19 @@ exports.registerUser = (req, res) => {
 };
 exports.productDeatails = async (req, res) => {
   let productId = req.query.id;
-  // console.log(productId);
   const Products = await Product.findById(productId);
-  const product = await Product.find();
-  // console.log(Products);
-  res.render("user/productDetails", { Products, product });
+    const cats = await Product.findById(productId).populate('category');
+  const product = await Product.find({});
+  console.log(product)
+  res.render("user/productDetails", { Products, product,cats });
 };
 exports.getMyAcc = async (req, res) => {
   if (req.session.user) {
-    const user = await User.findById(req.session.user);
-    const userAddress = user.address;
+    const user = await User.findOne({_id:mongoose.Types.ObjectId(req.session.user._id)});
+    let userAddress=user.address;
     const orders=await Order.find({});
+    const allOrders=await Order.count()
+    // console.log(allOrders)
      let quantityTotal = await Order.aggregate([
        {
          $project: {
@@ -68,7 +73,7 @@ exports.getMyAcc = async (req, res) => {
        { $project: { productsTotal: { $sum: "$products.quantity" } } },
      ]);
     // console.log(orders)
-    res.render("user/account", { user, userAddress,orders, quantityTotal});
+    res.render("user/account", { user,userAddress,orders,allOrders, quantityTotal});
   } else {
     res.redirect("/");
   }
@@ -142,7 +147,6 @@ exports.deleteAddress = async (req, res) => {
 };
 exports.getAddressDetails=async(req,res)=>{
   let addId=req.query.id;
-  console.log(addId)
   let user=await User.findById(req.session.user)
   // console.log(user)
   let myAddress = await User.aggregate([
@@ -159,7 +163,7 @@ exports.getAddressDetails=async(req,res)=>{
   ]);
   console.log(myAddress)
   let addresses=myAddress.$.address
-  console.log(this.getAddressDetails)
+  // console.log(this.getAddressDetails)
    let Categories = await Category.find({});
 
   return res.render('user/address-edit',{addresses,user,Categories})
