@@ -32,16 +32,20 @@ exports.indexPage = async (req, res) => {
   let userDet = await Order.find({}).populate("userId").lean();
   let Products = await Product.find({});
   let users = await User.find({});
+  let totalUser=await User.find({}).count()
+  let totalOrder=await Order.find({}).count()
+
+
   let completedStatus = await Order.find({ status: "Delivered" }).count();
-  console.log(completedStatus);
+  // console.log(completedStatus);
   let cancelledStatus = await Order.find({ status: "Cancelled" }).count();
-  console.log(cancelledStatus);
+  // console.log(cancelledStatus);
   let placedStatus = await Order.find({ status: "Placed" }).count();
-  console.log(placedStatus);
+  // console.log(placedStatus);
   let onDelivery = await Order.find({ status: "On Delivery" }).count();
-  console.log(onDelivery);
+  // console.log(onDelivery);
     let pending = await Order.find({ status: "Pending" }).count();
-    console.log(pending);
+    // console.log(pending);
 const orderStatus = [
   completedStatus,
   placedStatus,
@@ -80,8 +84,12 @@ weekRevenue.forEach((e)=>{
   countOrder.push(e.count)
 });
 
-console.log(weekRevenue);
+// console.log(weekRevenue);
+console.log(totalOrder);
+console.log(totalUser);
   res.render("admin/admin-index", {
+    totalUser,
+    totalOrder,
     allOrders,
     userDet,
     quantityItem,
@@ -90,7 +98,7 @@ console.log(weekRevenue);
     orderStatus,
     revenueDate,
     revenueAmount,
-    countOrder
+    countOrder,
   });
 };
 

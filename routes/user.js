@@ -63,5 +63,8 @@ router.post("/otp-validate", authController.makeOtp);
 router.get('/register',Ucontroller.registerUser)
 router.post('/login',authController.loginUser)
 router.get("/user-logout", authController.userLogout);
-
+router.get("/forgettPassword",authController.getResestPas);
+router.post("/forget-pass",authController.sendResetOtp,otpAuth.sendOtp);
+router.post("/Resetotp-validate", authController.makeResetOtp);
+router.post("/reset-password",authController.resetPassword);
 module.exports=router;

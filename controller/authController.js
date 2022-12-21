@@ -1,9 +1,11 @@
 const { response } = require("express");
 const bcrypt = require("bcrypt");
 const Promise = require("promise");
+const mongoose=require('mongoose')
 const User = require("../model/UserSchema");
 const Admin = require("../model/adminSchema");
 const Uses=require('../middleware/userSession')
+const Category=require('../model/categorySchema')
 const otpAuth = require("../utils/otpAuthentication");
 
 //user registration
@@ -189,4 +191,65 @@ exports.makeOtp = async(req, res) => {
 exports.userLogout=(req,res)=>{
   req.session.destroy();
   res.redirect("/");
+}
+
+exports.getResestPas=async(req,res)=>{
+  const user=await User.findById(mongoose.Types.ObjectId(req.session.user))
+  const Categories=await Category.find({})
+  res.render('user/forget-password',{user,Categories})
+}
+exports.sendResetOtp=(req,res)=>{
+  phone=req.body.phone;
+  console.log(phone)
+  otpAuth.sendOtp(phone)
+  res.render("user/resetotp-validate");
+}
+exports.makeResetOtp = async (req, res) => {
+  let con = req.body;
+  console.log(con);
+  let otp = con.one
+    .concat(con.two)
+    .concat(con.three)
+    .concat(con.four)
+    .concat(con.five)
+    .concat(con.six);
+
+  let verify = await otpAuth.verifyOtp(phone, otp);
+  if (verify.valid) {
+    // letUser.updateOne({ _id: id });
+    await User.updateOne({ _id: id }, { $set: { verified: true } });
+    res.render("user/reset-password");
+  } else {
+    res.redirect("/signup");
+  }
+};
+
+exports.resetPassword=async(req,res)=>{
+  console.log(req.body)
+  let phoneNumber=req.body.phone;
+  let newPassword=req.body.password;
+  let message;
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+  try {
+    if(req.body.password!=req.body.conformPassword){
+      message='You have entered different Passwords '
+      res.locals.message=message;
+      return res.render('user/reset-password')
+    }
+    if(!req.body.password||!req.body.phone||!req.body.conformPassword){
+      message=`Please fill all the Fields`;
+      res.locals.message=message;
+      return res.render('user/reset-password')
+    }
+    await User.updateOne(
+      { phone: phoneNumber },
+      {
+        $set: { password: hashedPassword },
+      }
+    );
+    res.redirect("/");
+  } catch (error) {
+    console.log(error)
+  }
 }
