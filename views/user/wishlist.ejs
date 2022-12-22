@@ -65,16 +65,16 @@
                                                     class="remove-btn"><i class="fal fa-times"></i></button></a></td>
                                         <td class="first-child"><a href="/product-details"><img
                                                     style="height:200px; width:auto;"
-                                                    src="/productImages/<%= products[i].Product?.thumbnail%>"></a>
+                                                    src="/productImages/<%= products[i].Product.thumbnail%>"></a>
                                             <a href="/product-details" class="pretitle">
-                                                <%= products[i].Product?.title %>
+                                                <%= products[i].Product.title %>
                                             </a>
                                         </td>
                                         </td>
                                         <td><span class="product-price">
-                                                <%= products[i].Product?.price %>.$
+                                                <%= products[i].Product.price %>.$
                                             </span></td>
-                                        <% if(products[i].Product?.quantity==0){ %>
+                                        <% if(products[i].Product.quantity==0){ %>
                                             <td class="stock">
                                                 <p style="color:red">Out of Stock</p>
                                             </td>
