@@ -313,6 +313,23 @@
                                 icon:'success',
                                 title:'already exist in cart',
                             })
+                        }else if(response.outOfStock){
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+                            Toast.fire({
+                                icon: 'error',
+                                title:'oops',
+                                text: 'Product is out off stock',
+                            })
                         }
                         else{
                             Swal.fire({
@@ -380,6 +397,7 @@
                     <!--================= Main Script =================-->
                     <script src="/js/main.js"></script>
                     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script src="/js/search.js"></script>
 
 </body>
 

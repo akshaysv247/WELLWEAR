@@ -33,7 +33,7 @@ module.exports = {
   editProduct: async (req, res) => {
     id = req.query.id;
     data = req.body;
-    console.log(data)
+    // console.log(data)
     await Product.updateOne(
       { _id: id },
       {
@@ -58,7 +58,7 @@ module.exports = {
     id = req.params.id;
     const products = await Product.findOne({ _id: id });
     let category=await Product.findOne({_id:id}).populate('category')
-    console.log(category)
+    // console.log(category)
     res.render("admin/product-details", { products });
   },
   addCategory: async (req, res) => {
@@ -82,9 +82,9 @@ module.exports = {
   },
   getCategoryDetails: async (req, res) => {
     id = req.params.id;
-    console.log("kdlsn",id)
+    // console.log("kdlsn",id)
     let Categories = await Category.findOne({ _id: id });
-    console.log(Categories)
+    // console.log(Categories)
     res.render('admin/edit-category', { Categories });
   },
   deleteCategory: async (req, res) => {
@@ -93,11 +93,12 @@ module.exports = {
     res.redirect("/admin/list-category");
   },
   editCategory: async (req, res) => {
-    id = req.params.id;
-    cat = req.body;
-    console.log("fkjfjn gkda gk ",cat,id)
-    await Category.updateOne(
-      { _id: id },
+   const id = req.params.id;
+   console.log(id);
+   const cat = {...req.body};
+    // console.log("fkjfjn gkda gk ",cat,id)
+    await Category.findByIdAndUpdate(
+      id ,
       {
         $set: {
           catName: cat.catName,

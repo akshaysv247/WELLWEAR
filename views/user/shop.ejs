@@ -268,6 +268,23 @@
                                 title: 'already exist in cart',
                             })
                         }
+                        else if (response.outOfStock) {
+                            const Toast = Swal.fire({
+                                toast: true,
+                                psoition: top - end,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                                },
+                            })
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Product is Out off stock'
+                            })
+                        }
                         else {
                             Swal.fire({
                                 icon: 'error',

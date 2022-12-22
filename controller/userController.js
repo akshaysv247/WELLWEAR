@@ -14,6 +14,8 @@ exports.homePage = async (req, res) => {
   const Products = await Product.find({});
   const cart = await Cart.find({});
   const banner=await Banner.find({});
+
+  
   res.render("user/index", {
     title: "WEAR WELL",
     Categories,

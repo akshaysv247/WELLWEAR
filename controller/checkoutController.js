@@ -83,9 +83,36 @@ module.exports = {
       }).then(async(response)=>{
       let orderId= response._id;
       let totalAmount=response.total
-      if(req.body.payment=='COD'){
 
-       await Cart.deleteOne({user:mongoose.Types.ObjectId(user)})
+      if(req.body.payment=='COD'){
+                  let productInfos = await Cart.aggregate([
+                    {
+                      $match: {
+                        user: mongoose.Types.ObjectId(req.session.user._id),
+                      },
+                    },
+                    {
+                      $project: {
+                        "cartItems.product": 1,
+                        "cartItems.quantity": 1,
+                      },
+                    },
+                    {
+                      $unwind:{path:"$cartItems"}
+                    }
+                  ]);
+                  // console.log(productInfos);
+                  
+                  productInfos.forEach(async(e)=>{
+                    // console.log(e.cartItems.quant);
+                    let updatedPro = await Product.findByIdAndUpdate(
+                      e.cartItems.product,
+                      { $inc:{quantity:-e.cartItems.quantity} } ,
+                      { new: true }
+                    );
+                    // console.log(updatedPro);
+                  })
+        https: await Cart.deleteOne({ user: mongoose.Types.ObjectId(user) });
       res.json({status:true,
       data:user,Categories,cart})
 
@@ -122,7 +149,34 @@ module.exports = {
         {
           $set:{status:'Placed'}
         }
-        ).then(async(response)=>{
+        )
+          let productInfos = await Cart.aggregate([
+            {
+              $match: {
+                user: mongoose.Types.ObjectId(req.session.user._id),
+              },
+            },
+            {
+              $project: {
+                "cartItems.product": 1,
+                "cartItems.quantity": 1,
+              },
+            },
+            {
+              $unwind: { path: "$cartItems" },
+            },
+          ]);
+          console.log(productInfos);
+
+          productInfos.forEach(async (e) => {
+            console.log(e.cartItems.quant);
+            let updatedPro = await Product.findByIdAndUpdate(
+              e.cartItems.product,
+              { $inc: { quantity: -e.cartItems.quantity } },
+              { new: true }
+            );
+            // console.log(updatedPro);
+          });
           await Cart.deleteOne({ user: mongoose.Types.ObjectId(req.session.user._id) });
              let user = await User.findById(req.session.user._id);
            let Categories = await Category.find();
@@ -130,7 +184,7 @@ module.exports = {
       data:
         user,Categories
       })
-        })
+        
       }
         
     },

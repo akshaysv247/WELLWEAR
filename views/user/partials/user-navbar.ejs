@@ -38,11 +38,11 @@
                         <div class="swiper-wrapper">
                             <% if(user) {%> 
                             <div class="swiper-slide">
-                                <h3 class="welcome-text">Hii <a href="/myAc"><%=user.username %></a></h3>
+                                <h3 class="welcome-text">Hii <a href="/myAc"><%=user.username.toUpperCase() %></a></h3>
                             </div>
                             <% }else{ %> 
                             <div class="swiper-slide">
-                                <h3 class="welcome-text"> welcome...<a href="#">TO WELLWEAR </a></h3>
+                                <h3 class="welcome-text"> <a href="#"> WELLWEAR -></a></h3>
                                 </div>
                                 <% } %> 
                         </div>
@@ -153,6 +153,7 @@
                     <div class="header-action-items header-action-items1">
                         <div class="search-part">
                             <div class="search-icon action-item icon"><i class="fa-brands fa-searchengin"></i></div>
+                            <form action="/product-search" method="post" id="search-form">
                             <div class="search-input-area">
                                 <div class="container">
                                     <div class="search-input-inner">
@@ -160,10 +161,11 @@
                                             <input id="searchInput1" class="search-input" type="text"
                                                 placeholder="Search by keyword or #">
                                         </div>
-                                        <div class="search-close-icon"><i class="fa-brands fa-searchengin"></i></div>
+                                        <div class="search-close-icon"><button type="submit"><i class="fa-brands fa-searchengin"></i></button></div>
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
                         <div class="cart action-item">
                             <div class="cart-nav">
@@ -459,26 +461,28 @@
 
                         <div class="swiper bannerSlide2">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="banner-single bg-image bg-image-3-1">
+                                <% banner.forEach(el=> { %>
+                                 
+                                    <div class="swiper-slide">
+                                        <div style="background-image: url('/bannerImg/<%= el.thumbnail %>') ;" class="banner-single bg-image bg-image-3-1">
                                         <div class="container">
                                             <div class="single-inner">
                                                 <div class="content-box">
                                                     <p class="slider-subtitle"><img src="/images/banner/wvbo-icon.png"
-                                                            alt=""> Spring
-                                                        summer 22 women’s collection </p>
-                                                    <h2 class="slider-title"> HOT COLLECTION <br> FOR WOMEN</h2>
+                                                            alt=""><%= el.description %></p>
+                                                    <h2 class="slider-title">GET LUCKY <br> BE FASHION </h2>
                                                     <div class="slider-description">
-                                                        <p>Easy & safe payment with PayPal. sequines & embroidered
+                                                        <p class="text-light">Easy & safe payment with PayPal. sequines & embroidered
                                                             for all</p>
                                                     </div>
-                                                    <a href="/shop" class="slider-btn2">View Collections</a>
+                                                    <a href="/shop" class="btn btn-outline-dark">View Collections</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="swiper-slide">
+                                <% }) %>
+                                <!-- <div class="swiper-slide">
                                     <div class="banner-single bg-image bg-image-3-3">
                                         <div class="container">
                                             <div class="single-inner">
@@ -515,7 +519,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="slider-navigation">
                                 <div class="swiper-button-prev slider-btn prev"><i class="rt rt-arrow-left-long"></i>
@@ -531,3 +535,4 @@
     </div>
     <!--================= Banner Section End Here =================-->
 </header>
+

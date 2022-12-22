@@ -84,14 +84,13 @@ router.get(
 router.get(
   "/edit-category/:id",
   ses.adminSession,
-  catUpload.resizeCategoryPic,catUpload.uploadCategoryPic,
   productController.getCategoryDetails
 );
 router.post(
   "/edit-category/:id",
   ses.adminSession,
-  catUpload.resizeCategoryPic,
   catUpload.uploadCategoryPic,
+  catUpload.resizeCategoryPic,
   productController.editCategory
 );
 
