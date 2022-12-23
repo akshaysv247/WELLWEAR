@@ -62,11 +62,11 @@
                         <% Categories.forEach(element=> { %>
                             <div class="swiper-slide">
                                 <div class="collection-item">
-                                    <a href="/category"><img src="/catImages/<%= element.thumbnail  %> "
+                                    <a href="/get-cat-item?id=<%= element._id %>"><img src="/catImages/<%= element.thumbnail  %>"
                                             alt="collection-image">
                                     </a>
                                     <p class="item-quantity">20 <span>items</span></p>
-                                    <a href="/category" class="item-catagory-box">
+                                    <a href="/get-cat-item?id=<%= element._id %>" class="item-catagory-box">
                                         <h3 class="title">
                                             <%= element.catName %>
                                         </h3>
