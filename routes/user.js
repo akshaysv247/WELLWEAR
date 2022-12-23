@@ -12,6 +12,7 @@ const checkoutController = require('../controller/checkoutController');
 const orders=require('../controller/order-controller')
 const category=require('../controller/catControl')
 const Coupons=require('../controller/coupon')
+const cartWish=require('../middleware/cartWish');
 
 
 router.get('/',Ucontroller.homePage)

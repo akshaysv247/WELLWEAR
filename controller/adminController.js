@@ -34,7 +34,7 @@ exports.indexPage = async (req, res) => {
   let users = await User.find({});
   let totalUser=await User.find({}).count()
   let totalOrder=await Order.find({}).count()
-
+  
 
   let completedStatus = await Order.find({ status: "Delivered" }).count();
   // console.log(completedStatus);
